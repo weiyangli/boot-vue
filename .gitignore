@@ -3,7 +3,7 @@
 *.iml
 *.ipr
 .idea/
-.vscode
+.vscode/
 out/
 classes/
 ### Maven ###
