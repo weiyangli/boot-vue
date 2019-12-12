@@ -4,7 +4,9 @@ import com.boot.bvserver.bean.Demo;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.service.DemoService;
 import com.boot.bvserver.util.IdWorker;
+import com.boot.bvserver.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,9 @@ public class DemoController {
     @Autowired
     private IdWorker  idWorker;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @GetMapping("/")
     @ResponseBody
     public String hello() {
@@ -32,6 +37,7 @@ public class DemoController {
     public Object insertOrUpdateDemo(@RequestParam String name){
         Demo demo = new Demo(idWorker.nextId(), name);
         demoService.insertOrUpdateDemo(demo);
+        redisUtil.lSet("list", demo, 60);
         return Result.ok();
     }
 
