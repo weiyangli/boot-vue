@@ -1,7 +1,29 @@
+# id 生成器机器唯一 id
+workerId: 0
 server:
-  address: localhost
+  session-timeout: 20000
   port: 80
 spring:
+  # thymeleaf 缓存开发时默认关闭
+  thymeleaf:
+    cache: false
+  # 使用 jackson 转化日期格式
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  # 设置控制台输出彩色
   output:
     ansi:
       enabled: ALWAYS
+  # 设置数据源
+  datasource:
+    # 使用 druid 连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/bv?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driverClassName: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*Mapper.xml
+  type-aliases-package: com.boot.bvserver.bean
