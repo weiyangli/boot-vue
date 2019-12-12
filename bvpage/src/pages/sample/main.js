@@ -4,7 +4,7 @@ import router from './router';
 import store  from './store';
 import '@/plugins/iview';
 
-import DemoDao  from '@/../public/static/dao/dao';
+import DemoDao  from '@/../public/static/js/dao/dao';
 
 Vue.prototype.$DemoDao   = DemoDao;
 new Vue({
