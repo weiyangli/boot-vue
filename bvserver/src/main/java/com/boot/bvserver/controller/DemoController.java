@@ -37,7 +37,7 @@ public class DemoController {
     public Object insertOrUpdateDemo(@RequestParam String name){
         Demo demo = new Demo(idWorker.nextId(), name);
         demoService.insertOrUpdateDemo(demo);
-        redisUtil.lSet("list", demo, 60);
+        redisUtil.lSet("list:", demo, 6000);
         return Result.ok();
     }
 
