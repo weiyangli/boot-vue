@@ -2,6 +2,10 @@ package com.boot.bvserver.config;
 
 import com.boot.bvserver.security.CustomUserDetailsService;
 import com.boot.bvserver.security.Md5PasswordEncoder;
+import com.boot.bvserver.security.SecurityFailureHandler;
+import com.boot.bvserver.security.SecurityLogoutSuccessHandler;
+import com.boot.bvserver.security.SecuritySuccessHandler;
+import com.boot.bvserver.security.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -48,6 +54,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomUserDetailsService();
     }
 
+    @Bean
+    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+        return new TokenAuthenticationFilter();
+    }
+
+    /**
+     * Security 验证通过后请求
+     *
+     * @return
+     */
+    @Bean
+    public SecuritySuccessHandler securitySuccessHandler() {
+        return new SecuritySuccessHandler();
+    }
+
+    /**
+     * Security 验证失败后请求
+     *
+     * @return
+     */
+    @Bean
+    public SecurityFailureHandler securityFailureHandler() {
+        return new SecurityFailureHandler();
+    }
+
+    /**
+     *Security 账号注销后调用
+     *
+     * @return
+     */
+    @Bean
+    public SecurityLogoutSuccessHandler securityLogoutSuccessHandler() {
+        return new SecurityLogoutSuccessHandler();
+    }
+
     /**
      * SpringSecurity 面膜策略设置 用户信息查询
      *
@@ -61,25 +102,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         //配置静态文件不需要认证
         web.ignoring().antMatchers("/static-x/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        // 系统使用 token 进行校验，禁用 token
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 在认证用户名之前检验 token 是否有效
+        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+        .authorizeRequests()
                 // 所有用户均可访问的资源
-                .antMatchers(  "/page/login", "/login", "403").permitAll()
-                // 任何尚未匹配的URL只需要验证用户即可访问
+                .antMatchers(  "/page/login", "/login", "/page/403").permitAll()
+                // 除了上面请求其他请求都需要认证
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/page/login").successForwardUrl("/index").failureForwardUrl("/login?error=1")
+                .formLogin().loginPage("/page/login").failureForwardUrl("/page/login?error=1").successHandler(securitySuccessHandler()).failureHandler(securityFailureHandler())
                 .and()
                 //权限拒绝的页面
-                .exceptionHandling().accessDeniedPage("/403");
-
-        http.logout().logoutSuccessUrl("/login");
+                .exceptionHandling().accessDeniedPage("/page/403");
+        http.logout().logoutSuccessHandler(securityLogoutSuccessHandler()).logoutSuccessUrl("/page/login");
         //http.cors().configurationSource(configurationSource()).and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 前后端分离允许跨域
         http.csrf().disable();

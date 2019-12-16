@@ -1,5 +1,10 @@
 # id 生成器机器唯一 id
 workerId: 0
+# token 相关参数
+# 身份认证 token 的有效期: 30 天
+authTokenDuration: 2592000
+appId: tokenId
+appKey: tokenKey
 server:
   session-timeout: 20000
   port: 80

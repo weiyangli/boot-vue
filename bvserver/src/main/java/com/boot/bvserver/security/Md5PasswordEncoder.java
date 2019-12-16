@@ -21,12 +21,12 @@ public class Md5PasswordEncoder implements PasswordEncoder {
 
     /**
      * 密码比对
-     * @param charSequence
-     * @param s
+     * @param newPassword
+     * @param oldPassword
      * @return
      */
     @Override
-    public boolean matches(CharSequence charSequence, String s) {
-        return charSequence.equals(Utils.md5(s));
+    public boolean matches(CharSequence newPassword, String oldPassword) {
+        return oldPassword.equals(Utils.md5(newPassword.toString()));
     }
 }

@@ -5,9 +5,10 @@ package com.boot.bvserver.bean;
  *
  */
 public enum ResultEnum {
-    // 商户模块
-    MERCHANT_NOT_EXIST(1000, "商户不存在"),
-    MERCHANT_PRODUCT_NOT_EXIST(1001, "商户产品不存在");
+    // 系统
+    LOGIN_SUCCESS(1000, "登陆成功!"),
+    LOGIN_FAILURE(1001, "登陆失败"),
+    LOGOUT_SUCCESS(1002, "注销成功!");
 
     private int code;        // 错误编码
     private String desc;     // 描述

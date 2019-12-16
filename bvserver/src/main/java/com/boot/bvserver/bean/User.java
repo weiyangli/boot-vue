@@ -1,6 +1,7 @@
 package com.boot.bvserver.bean;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 public class User implements UserDetails {
 
     private Long id;
@@ -23,11 +25,11 @@ public class User implements UserDetails {
     // 用户权限
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(roles == null || roles.size()<=0){
+        if(roles == null || roles.size()<= 0){
             return null;
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for(Role r:roles){
+        for(Role r : roles){
             authorities.add(new SimpleGrantedAuthority(r.getCode()));
         }
         return authorities;
@@ -66,4 +68,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
+
 }

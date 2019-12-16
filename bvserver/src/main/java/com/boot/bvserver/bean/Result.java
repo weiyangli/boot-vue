@@ -42,6 +42,9 @@ public class Result {
     public static Result fail() {
         return new Result().setCode(500).setDesc("请求失败");
     }
+    public static Result fail(String desc) {
+        return new Result().setDesc(desc);
+    }
     public static Result fail(int code, String desc) {
         return new Result().setCode(code).setDesc(desc);
     }

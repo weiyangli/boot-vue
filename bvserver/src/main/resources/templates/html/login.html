@@ -26,22 +26,22 @@ img{border:0;}
     <div class="lg_top"></div>
     <div class="lg_main">
         <div class="lg_m_1">
-            <form action="/page/login" class="login_form">
+            <form action="/login" method="POST" class="login_form">
                 <input name="username" placeholder="用户名" value="" class="ur" />
                 <input name="password" placeholder="密码" type="password" value="" class="pw" />
+                <button id="login" type="submit" class="bn">登录</button>
             </form>
         </div>
     </div>
     <div class="lg_foot">
-        <input type="button" value="登录"  onclick="login()" class="bn" />
+        <!--<input type="button" value="登录"  onclick="login()" class="bn" />-->
     </div>
 </form>
 </div>
 <script src="/static-x/lib/jquery.min.js"></script>
 <script>
     function login(){
-        const form = $(".login_form");
-        form.submit();
+        $(".login_form").submit();
     }
 </script>
 </body>

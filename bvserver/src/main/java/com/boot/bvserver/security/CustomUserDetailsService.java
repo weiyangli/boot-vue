@@ -21,11 +21,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
          User user = userDao.findUserByUsername(username);
-         List<Role> roles = new ArrayList<>();
-         Role role = new Role();
-         role.setCode("admin").setName("管理员").setId(1l);
-         roles.add(role);
-         user.setRoles(roles);
+         if (user != null) {
+             List<Role> roles = new ArrayList<>();
+             Role role = new Role();
+             role.setCode("admin").setName("管理员").setId(1l);
+             roles.add(role);
+             user.setRoles(roles);
+         } else {
+             throw new UsernameNotFoundException(username + " not found!");
+         }
          return user;
     }
 }
