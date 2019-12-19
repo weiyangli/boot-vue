@@ -7,8 +7,9 @@ package com.boot.bvserver.bean;
 public enum ResultEnum {
     // 系统
     LOGIN_SUCCESS(1000, "登陆成功!"),
-    LOGIN_FAILURE(1001, "登陆失败"),
-    LOGOUT_SUCCESS(1002, "注销成功!");
+    LOGIN_FAILURE(1001, "登陆失败!"),
+    LOGOUT_SUCCESS(1002, "注销成功!"),
+    ACCESS_ERROR(1003, "没有权限!");
 
     private int code;        // 错误编码
     private String desc;     // 描述

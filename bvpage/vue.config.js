@@ -10,6 +10,7 @@ module.exports = {
     // 多页的页面
     pages: {
         sample: 'src/pages/sample/main.js',
+        admin: 'src/pages/admin/main.js',
     },
 
     // yarn build 的输出目录

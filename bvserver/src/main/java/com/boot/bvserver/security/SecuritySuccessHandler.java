@@ -47,31 +47,22 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 1. 查询用户信息
         // 2. 将 token 写入 response
-        // 3. 跳转到 index 页面
 
         // [1] 查询用户信息
         String username = request.getParameter("username");
         User user = userDao.findUserByUsername(username);
-        List<Role> roles = new ArrayList<>();
-        Role role = new Role();
-        role.setCode("ROLE_admin").setName("管理员").setId(1l);
-        roles.add(role);
-        user.setRoles(roles);
         Authentication auth =  new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         // [2] 将 token 写入 response
         String token = tokenService.generateToken(user);
-        Utils.writeCookie(response, Constant.AUTH_TOKEN_KEY, token, authTokenDuration);
-//        response.setContentType("application/json;charset=utf-8");
-//        Result respBean = Result.ok(ResultEnum.LOGIN_SUCCESS, token);
-//        ObjectMapper om = new ObjectMapper();
-//        PrintWriter out = response.getWriter();
-//        out.write(om.writeValueAsString(respBean));
-//        out.flush();
-//        out.close();
+        response.setContentType("application/json;charset=utf-8");
+        Result respBean = Result.ok(token);
+        ObjectMapper om = new ObjectMapper();
+        PrintWriter out = response.getWriter();
+        out.write(om.writeValueAsString(respBean));
+        out.flush();
+        out.close();
 
-        // [3] 跳转到 index 页面
-        request.getRequestDispatcher("/index").forward(request, response);
     }
 }

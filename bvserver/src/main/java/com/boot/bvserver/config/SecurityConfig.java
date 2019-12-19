@@ -2,6 +2,7 @@ package com.boot.bvserver.config;
 
 import com.boot.bvserver.security.CustomUserDetailsService;
 import com.boot.bvserver.security.Md5PasswordEncoder;
+import com.boot.bvserver.security.SecurityAccessDeniedHandler;
 import com.boot.bvserver.security.SecurityFailureHandler;
 import com.boot.bvserver.security.SecurityLogoutSuccessHandler;
 import com.boot.bvserver.security.SecuritySuccessHandler;
@@ -90,6 +91,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
+     * 没有访问权限调用
+     *
+     * @return
+     */
+    @Bean
+    public SecurityAccessDeniedHandler securityAccessDeniedHandler() {
+        return new SecurityAccessDeniedHandler();
+    }
+
+    /**
      * SpringSecurity 面膜策略设置 用户信息查询
      *
      * @param auth
@@ -115,14 +126,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
                 // 所有用户均可访问的资源
-                .antMatchers(  "/page/login", "/login", "/page/403").permitAll()
+                .antMatchers(  "/page/login", "/login", "/page/403", "/get/value").permitAll()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/user/**").hasAnyRole(new String [] {"ADMIN", "ROLE_COMMON_ADMIN","ROLE_USER"})
                 // 除了上面请求其他请求都需要认证
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/page/login").failureForwardUrl("/page/login?error=1").successHandler(securitySuccessHandler()).failureHandler(securityFailureHandler())
+                .formLogin()
+                .usernameParameter("username").passwordParameter("password")
+                .successHandler(securitySuccessHandler()).failureHandler(securityFailureHandler())
                 .and()
                 //权限拒绝的页面
-                .exceptionHandling().accessDeniedPage("/page/403");
+                .exceptionHandling().accessDeniedHandler(securityAccessDeniedHandler());
         http.logout().logoutSuccessHandler(securityLogoutSuccessHandler()).logoutSuccessUrl("/page/login");
         //http.cors().configurationSource(configurationSource()).and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 前后端分离允许跨域

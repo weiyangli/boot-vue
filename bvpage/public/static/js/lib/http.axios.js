@@ -109,12 +109,12 @@ class Rest {
 
             // 服务器抛异常时，有时 Windows 的 Tomcat 环境下竟然取不到 header X-Requested-With, Mac 下没问题，
             // 正常请求时都是好的，手动添加 X-Requested-With 为 XMLHttpRequest 后所有环境下正常和异常时都能取到了
+            if (localStorage.getItem('JWT_TOKEN')) { options.headers['bv_token'] = localStorage.getItem('JWT_TOKEN'); }
             options.headers['X-Requested-With'] = 'XMLHttpRequest';
             options.headers['Content-Type'] = json ? 'application/json;charset=UTF-8' : 'application/x-www-form-urlencoded';
 
             // 执行请求
             axios(options).then(response => {
-                console.log(response);  
                 resolve(response.data);
             }).catch(response => {
                 const error = response.response;

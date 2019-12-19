@@ -159,6 +159,6 @@ public class Utils {
     }
 
    public static void main(String[] args) {
-        System.out.println(md5("lhp"));
+        System.out.println(md5("123456"));
     }
 }

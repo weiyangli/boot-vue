@@ -3,9 +3,12 @@ package com.boot.bvserver.security;
 import com.alibaba.fastjson.JSON;
 import com.boot.bvserver.bean.Role;
 import com.boot.bvserver.bean.User;
+import com.boot.bvserver.dao.UserDao;
 import com.boot.bvserver.util.Jwt;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +23,9 @@ import java.util.Map;
 @Setter
 @Component
 public class TokenService {
+
+    @Autowired
+    private UserDao userDao;
 
     @Value("${authTokenDuration}")
     private int authTokenDuration; // 身份认证 token 的有效期，单位为秒
@@ -55,15 +61,8 @@ public class TokenService {
         try {
             // 获取 token 中保存的 id, username, roles
             Map<String, String> params = Jwt.params(token);
-            Long         id = Long.parseLong(params.get("id"));
             String username = params.get("username");
-            String nickname = params.get("nickname");
-            List<Role> roles = new ArrayList<>();
-            Role role = new Role();
-            role.setCode("ROLE_admin").setName("管理员").setId(1l);
-            roles.add(role);
-            User user = new User();
-            user.setId(id).setNickname(nickname).setUsername(username).setPassword("[protected]").setRoles(roles);
+            User user = userDao.findUserByUsername(username);
             return user;
         } catch (Exception ex) {
             return null;

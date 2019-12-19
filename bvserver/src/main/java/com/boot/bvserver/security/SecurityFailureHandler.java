@@ -45,13 +45,12 @@ public class SecurityFailureHandler implements AuthenticationFailureHandler {
         } else if (e instanceof DisabledException) {
             respBean = Result.fail("账户被禁用，请联系管理员!");
         } else {
-            respBean = Result.ok(ResultEnum.LOGIN_FAILURE, "");
+            respBean = Result.reqOkEnum(ResultEnum.LOGIN_FAILURE);
         }
         ObjectMapper om = new ObjectMapper();
         PrintWriter out = response.getWriter();
         out.write(om.writeValueAsString(respBean));
         out.flush();
         out.close();
-//        request.getRequestDispatcher("/page/login").forward(request, response);
     }
 }

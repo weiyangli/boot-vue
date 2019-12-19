@@ -25,7 +25,7 @@ public class User implements UserDetails {
     // 用户权限
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(roles == null || roles.size()<= 0){
+        if(roles == null || roles.size() <= 0){
             return null;
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();

@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boot.bvserver.dao.UserDao">
-    <select id="findUserByUsername" resultType="com.boot.bvserver.bean.User">
-        SELECT id, username, nickname, password, picture, enabled
+    <!-- 根据用户名查询用户信息 -->
+    <select id="findUserByUsername" resultMap="UserMapper">
+        SELECT `user`.id, username, nickname, password, picture, enabled,
+        role.id role_id, role.name, role.code
         FROM `user`
+        LEFT JOIN user_role on `user`.id = user_role.user_id
+        LEFT JOIN role on user_role.role_id = role.id
         WHERE username = #{username}
     </select>
+
+    <!-- User 类 mapper 映射 -->
+    <resultMap id="UserMapper" type="com.boot.bvserver.bean.User">
+        <id     property="id"        column="id"/>
+        <result property="username"  column="username"/>
+        <result property="nickname"  column="nickname"/>
+        <result property="password"  column="password"/>
+        <result property="picture"   column="picture"/>
+        <result property="enabled"   column="enabled"/>
+        <collection property="roles" resultMap="RoleMapper"/>
+    </resultMap>
+
+    <!-- Role 类 mapper 映射 -->
+    <resultMap id="RoleMapper" type="com.boot.bvserver.bean.Role">
+        <id     property="id"    column="role_id"/>
+        <result property="name"  column="name"/>
+        <result property="code"  column="code"/>
+    </resultMap>
 </mapper>

@@ -1,4 +1,6 @@
 package com.boot.bvserver.controller;
+import com.boot.bvserver.bean.Result;
+import com.boot.bvserver.bean.ResultEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +24,7 @@ public class LoginController {
 
     @GetMapping(Urls.PAGE_ACCESS)
     @ResponseBody
-    public String access() {
-        return "没有权限!";
+    public Result access() {
+        return Result.reqFailEnum(ResultEnum.ACCESS_ERROR);
     }
 }
