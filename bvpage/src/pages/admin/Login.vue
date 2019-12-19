@@ -30,7 +30,9 @@ export default {
         const checkCode  = (rule, value, callback) => {
             if (!value) {
                 callback(new Error('请输入验证码'));
-            } else if (value.toLowerCase() != this.authCode.code.toLowerCase()) {
+            } else if (this.authCode.failureTime < new Date()) {
+                callback(new Error('验证码已失效'));
+            }  else if (value.toLowerCase() != this.authCode.code.toLowerCase()) {
                 callback(new Error('验证码输入有误'));
             } else {
                 callback();
@@ -79,8 +81,6 @@ export default {
                     }).catch((desc) => {
                         this.$Message.error(desc);
                     });
-                } else {
-                    this.$Message.error('Fail!');
                 }
             })
         },
@@ -88,6 +88,10 @@ export default {
         codeGenerator() {
             this.$SystemDao.codeGenerator().then((data) => {
                 this.authCode = data;
+                // 设置 60 秒后失效
+                let now = new Date();
+                now.setSeconds(now.getSeconds() + 60);
+                this.authCode.failureTime = now;
             }).catch((desc) => {
                 this.$Message.error(desc);
             });

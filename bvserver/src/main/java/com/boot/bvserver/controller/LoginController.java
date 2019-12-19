@@ -32,6 +32,11 @@ public class LoginController {
         return Result.reqFailEnum(ResultEnum.ACCESS_ERROR);
     }
 
+    /**
+     * 获取验证码
+     *
+     * @return
+     */
     @GetMapping(Urls.PAGE_CODE)
     @ResponseBody
     public Result codeGenerator() {
