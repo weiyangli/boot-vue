@@ -30,9 +30,9 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
   # redis 缓存
   redis:
-    host: 10.8.51.27
+    host: localhost
     port: 6379
-    password: eeehRsz
+    password:
     # 连接超时时间（毫秒）
     timeout: 5000ms
     jedis:

@@ -6,6 +6,7 @@ import '@/plugins/iview';
 
 import SystemDao  from '@/../public/static/js/dao/systemDao';
 
+Vue.config.productionTip = false;
 Vue.prototype.$SystemDao   = SystemDao;
 
 //路由拦截器

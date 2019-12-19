@@ -1,11 +1,15 @@
 package com.boot.bvserver.controller;
+import com.alibaba.fastjson.JSONObject;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.bean.ResultEnum;
+import com.boot.bvserver.util.CodeUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -26,5 +30,17 @@ public class LoginController {
     @ResponseBody
     public Result access() {
         return Result.reqFailEnum(ResultEnum.ACCESS_ERROR);
+    }
+
+    @GetMapping(Urls.PAGE_CODE)
+    @ResponseBody
+    public Result codeGenerator() {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = CodeUtil.generateCodeAndPic();
+        } catch (IOException io) {
+            return Result.reqFailEnum(ResultEnum.CODE_GENERATOR_FAIL);
+        }
+        return Result.ok(jsonObject);
     }
 }

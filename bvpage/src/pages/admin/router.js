@@ -7,17 +7,29 @@ export default new Router({
     routes: [{
             path: '/',
             name: 'login',
-            component: () => import('@/components/Menu'),
+            component: () => import('./Login.vue'),
         },
         {
             path: '/main',
             name: 'main',
-            component: () => import('./main.vue'),
+            component: () => import('@/components/Menu'),
             children: [
                 {
                     path: '/user',
                     name: 'user',
                     component: () => import('./subpage/user/users.vue'),
+                    children: [
+                        {
+                            path: '/user-list',
+                            name: 'user-list',
+                            component: () => import('./subpage/user/user-list.vue'),
+                        },
+                        {
+                            path: '/role-list',
+                            name: 'role-list',
+                            component: () => import('./subpage/user/role-list.vue'),
+                        }
+                    ]
                 },
                 {
                     path: '/activity',

@@ -1,10 +1,15 @@
 package com.boot.bvserver.util;
 
 import com.boot.bvserver.bean.Constant;
+import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -156,6 +161,24 @@ public class Utils {
      */
     public static void deleteCookie(HttpServletResponse response, String name) {
         writeCookie(response, name, null, 0);
+    }
+
+    /**
+     * 服务端不存储临时验证码，将图片验证码转 base64
+     *
+     * @param buffImg
+     * @return
+     * @throws Exception
+     */
+    public static String codeImageToBase64(BufferedImage buffImg) throws IOException {
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();//io流
+        ImageIO.write(buffImg, "png", bao);//写入流中
+        byte[] bytes = bao.toByteArray();//转换成字节
+        BASE64Encoder encoder = new BASE64Encoder();
+        String png_base64 =  encoder.encodeBuffer(bytes).trim();//转换成base64串
+        //删除 \r\n
+        png_base64 = png_base64.replaceAll("\n", "").replaceAll("\r", "");
+        return String.format("data:image/png;base64,%s", png_base64);
     }
 
    public static void main(String[] args) {

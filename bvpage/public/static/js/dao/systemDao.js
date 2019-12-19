@@ -42,4 +42,20 @@ export default class systemDao {
             });
         });
     }
+
+    /**
+     * 生成二位码
+     * 
+     */
+    static codeGenerator() {
+        return new Promise((resolve, reject) => {
+            Rest.get({ url: Urls.PAGE_CODE }).then(({success, code, data, desc}) => {
+                if (success) {
+                    resolve(data);
+                } else {
+                    reject(desc);
+                }
+            });
+        });
+    }
 }

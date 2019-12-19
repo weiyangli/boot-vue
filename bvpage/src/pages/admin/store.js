@@ -19,10 +19,11 @@ export default new Vuex.Store({
             localStorage.setItem('JWT_TOKEN', data)
             state.token = data;
         },
-        // 退出登录将, token清空
+        // 退出登录将, 清空 localStorage 中 token 和 菜单
         SET_LOGOUT: (state) => {
             localStorage.removeItem('JWT_TOKEN');
+            localStorage.removeItem('menuName');
             state.token = null
-        }
+        },
     }
 });
