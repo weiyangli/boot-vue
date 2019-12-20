@@ -21,6 +21,7 @@ public class Md5PasswordEncoder implements PasswordEncoder {
 
     /**
      * 密码比对
+     *
      * @param newPassword
      * @param oldPassword
      * @return

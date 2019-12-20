@@ -9,6 +9,10 @@
                 <Icon type="md-chatbubbles" />
                 角色管理
             </MenuItem>
+            <MenuItem name="chat" to="chat">
+                <Icon type="md-call" />
+                沟通交流
+            </MenuItem>
         </Menu>
         <div class="table-box">
             <router-view/>

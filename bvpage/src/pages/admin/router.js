@@ -28,6 +28,11 @@ export default new Router({
                             path: '/role-list',
                             name: 'role-list',
                             component: () => import('./subpage/user/role-list.vue'),
+                        },
+                        {
+                            path: '/chat',
+                            name: 'chat',
+                            component: () => import('./subpage/user/chat.vue'),
                         }
                     ]
                 },

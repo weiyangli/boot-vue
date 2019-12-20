@@ -57,7 +57,9 @@ public class CodeUtil {
         // randomCode用于保存随机产生的验证码，以便用户登录后进行验证。
         StringBuffer randomCode = new StringBuffer();
         int red = 0, green = 0, blue = 0;
-        // 随机产生codeCount数字的验证码。
+        // 随机产生codeCount数字的验证码
+        // 这个地方如果是多线程的话可能会存在一个线程使用了上一个线程的随机码画了图然后又用了当前线程的生成的随机码拼接了code
+        // 可能导致图中画的字符和生成的不一致
         for (int i = 0; i < codeCount; i++) {
             // 得到随机产生的验证码数字。
             String code = String.valueOf(codeSequence[random.nextInt(36)]);

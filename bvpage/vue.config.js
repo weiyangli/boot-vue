@@ -4,7 +4,7 @@ module.exports = {
     devServer: {
         disableHostCheck: true,
         port: 8888,
-        proxy: 'http://localhost'
+        proxy: 'http://localhost',
     },
 
     // 多页的页面
