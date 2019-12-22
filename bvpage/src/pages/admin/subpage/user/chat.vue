@@ -12,18 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="chat-box">
-            <div class="chat-head">
-                <h3>{{ pickName }}</h3>
-            </div>
-            <div class="message-box">
-                <div v-for="(message, index) in messages" :key="index" v-html="message" class="single-message"/>
-            </div>
-            <div class="input-box">
-                <Input v-model="message"  type="textarea" placeholder="Enter something..." @on-enter="sendMassage" class="message-input" />
-                <Chat/>
-            </div>
-        </div>
+        <Chat class="chat-box" :chatId="chatId"/>
     </Card>
 </template>
 
@@ -36,8 +25,7 @@ export default {
         return {
             names: ['张三广东省非规', '李四', '王五','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四'],
             pickName: '',
-            message: '',
-            messages: [],
+            chatId: '2',
         }
     },
     mounted() {
@@ -48,11 +36,6 @@ export default {
         changeGroup(name) {
             this.pickName = name;
         },
-        // 发送消息
-        sendMassage() {
-            this.messages.push(this.message);
-            this.message = '';
-        }
     },
     computed: {
     }
@@ -101,26 +84,6 @@ export default {
     }
     .chat-box {
         width: 100%;
-        .chat-head {
-            height: 60px;
-            border-bottom: 1px solid #dcdee2;
-            display: flex;
-            align-items: center;
-            padding: 16px;
-        }
-        .message-box {
-            height: 380px;
-            border-bottom: 1px solid #dcdee2;
-            .single-message {
-                padding: 5px;
-                margin-bottom: 3px;
-            }
-        }
-        .input-box {
-            .message-input {
-                height: 100%;
-            }
-        }
     }
 }
 </style>

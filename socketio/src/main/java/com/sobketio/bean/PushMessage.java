@@ -12,10 +12,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PushMessage {
 
-    /**
-     * 当前登陆的用户
-     */
-    private String loginUser;
+    private Long chatId;         // 当前聊天窗口唯一 id (两人聊天为接收人 userId, 群组聊天为群组 groupId)
+
 
     /**
      * 推送的标题
@@ -28,8 +26,8 @@ public class PushMessage {
     private String content;
 
 
-    public PushMessage(String loginUser, String title, String content) {
-        this.loginUser = loginUser;
+    public PushMessage(Long chatId, String title, String content) {
+        this.chatId = chatId;
         this.title = title;
         this.content = content;
     }

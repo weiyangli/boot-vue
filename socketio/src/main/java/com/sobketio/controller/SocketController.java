@@ -17,8 +17,8 @@ public class SocketController {
     private SocketIoService socketIoService;
 
     @GetMapping("/send")
-    public String sendMsg(@RequestParam("content")String content, @RequestParam("loginUser")String loginUser){
-        socketIoService.pushMessageToUser(new PushMessage(loginUser,"",content));
-        return "OK";
+    public String sendMsg(@RequestParam("content")String content, @RequestParam("chatId") Long chatId){
+        socketIoService.pushMessageToUser(new PushMessage(chatId,"",content));
+        return "success";
     }
 }

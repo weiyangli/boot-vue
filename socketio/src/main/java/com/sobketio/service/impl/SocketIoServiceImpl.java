@@ -37,7 +37,7 @@ public class SocketIoServiceImpl implements SocketIoService {
     }
 
     /**
-     * 功能描述：当我们的系统停止的时候关闭我们的socketIo
+     * 功能描述：当我们的系统停止的时候关闭我们的 socketIo
      * @throws Exception
      */
     @PreDestroy
@@ -50,15 +50,15 @@ public class SocketIoServiceImpl implements SocketIoService {
         // 监听客户端连接
         socketIOServer.addConnectListener( client -> {
             /**
-             * 此处实现我们的socket的连接的用户的逻辑，此处我前端传的是loginUser这个参数，大家可以根据自己的情况来定义入参
+             * 此处实现我们的socket的连接的用户的逻辑，此处我前端传的是 chatId 这个参数，大家可以根据自己的情况来定义入参
              */
-            String loginUser = getParamsByClient(client).get("loginUser").get(0);
+            String loginUser = getParamsByClient(client).get("chatId").get(0);
             clientMap.put(loginUser, client);
         });
 
         // 监听客户端断开连接
         socketIOServer.addDisconnectListener(client -> {
-            String loginUser = getParamsByClient(client).get("loginUser").get(0);
+            String loginUser = getParamsByClient(client).get("chatId").get(0);
             if (loginUser != null && !"".equals(loginUser)) {
                 clientMap.remove(loginUser);
                 client.disconnect();
@@ -87,7 +87,7 @@ public class SocketIoServiceImpl implements SocketIoService {
      */
     @Override
     public void pushMessageToUser(PushMessage pushMessage) {
-        clientMap.get(pushMessage.getLoginUser()).sendEvent(PUSH_EVENT, pushMessage);
+        clientMap.get(String.valueOf(pushMessage.getChatId())).sendEvent(PUSH_EVENT, pushMessage);
     }
 
     /**
