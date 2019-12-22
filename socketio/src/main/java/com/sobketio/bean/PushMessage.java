@@ -14,7 +14,6 @@ public class PushMessage {
 
     private Long chatId;         // 当前聊天窗口唯一 id (两人聊天为接收人 userId, 群组聊天为群组 groupId)
 
-
     /**
      * 推送的标题
      */
