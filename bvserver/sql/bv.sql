@@ -23,7 +23,7 @@ CREATE TABLE `demo` (
   `id` bigint(50) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- ----------------------------
 -- Records of demo
@@ -35,11 +35,11 @@ INSERT INTO `demo` VALUES ('389301103591686144', '战三');
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` bigint(50) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '角色名称',
+  `id`  bigint(50) NOT NULL,
+  `name` varchar(255)  DEFAULT NULL COMMENT '角色名称',
   `code` varchar(255) DEFAULT NULL COMMENT '编码',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- ----------------------------
 -- Records of role
@@ -57,10 +57,10 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL COMMENT '用户名',
   `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
   `password` varchar(255) NOT NULL COMMENT '密码',
-  `picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '头像',
+  `picture` varchar(255) DEFAULT NULL COMMENT '头像',
   `enabled` tinyint(2) DEFAULT '1' COMMENT '是否启用 0：禁用 1：启用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- ----------------------------
 -- Records of user
@@ -78,10 +78,24 @@ CREATE TABLE `user_role` (
   `role_id` bigint(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_role_key` (`user_id`,`role_id`) COMMENT '角色和用户一对一绑定'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '1', '1');
 INSERT INTO `user_role` VALUES ('2', '1', '2');
+
+-- ----------------------------
+-- Table structure for chat_group
+-- ----------------------------
+DROP TABLE IF EXISTS `chat_group`;
+CREATE TABLE `chat_group` (
+  `id` bigint(50) NOT NULL,
+  `group_name` varchar(255) DEFAULT NULL COMMENT '小组名称',
+  `createdTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updatedTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `createdBy` bigint(50) DEFAULT '0' COMMENT '创建人',
+  `updatedBy` bigint(50) DEFAULT '0' COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
