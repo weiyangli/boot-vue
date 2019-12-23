@@ -11,6 +11,15 @@
         WHERE username = #{username}
     </select>
 
+    <!-- 查询所有用户 -->
+    <select id="findUsers" resultMap="UserMapper">
+        SELECT `user`.id, username, nickname, picture, enabled,
+        role.id role_id, role.name, role.code
+        FROM `user`
+        LEFT JOIN user_role on `user`.id = user_role.user_id
+        LEFT JOIN role on user_role.role_id = role.id
+    </select>
+
     <!-- User 类 mapper 映射 -->
     <resultMap id="UserMapper" type="com.boot.bvserver.bean.User">
         <id     property="id"        column="id"/>

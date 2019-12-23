@@ -5,9 +5,13 @@ import store  from './store';
 import '@/plugins/iview';
 
 import SystemDao  from '@/../public/static/js/dao/systemDao';
+import UserDao  from '@/../public/static/js/dao/userDao';
+import MessageDao  from '@/../public/static/js/dao/messageDao';
 
 Vue.config.productionTip = false;
 Vue.prototype.$SystemDao   = SystemDao;
+Vue.prototype.$UserDao   = UserDao;
+Vue.prototype.$MessageDao   = MessageDao;
 
 //路由拦截器
 //to为向后走的路由对象，包括路由的完整信息

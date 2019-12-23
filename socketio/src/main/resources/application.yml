@@ -1,20 +1,20 @@
-# host�ڱ��ز��Կ�������Ϊlocalhost���߱���IP����Linux�������ܿɻ��ɷ�����IP
+# host 在本地测试可以设置为 localhost 或者本机 IP，在 Linux 服务器跑可换成服务器 IP
 socketio:
   host: localhost
   port: 9099
-  # �������ÿ֡�������ݵĳ��ȣ���ֹ�������ô�����������������
+  # 设置最大每帧处理数据的长度，防止他人利用大数据来攻击服务器
   maxFramePayloadLength: 1048576
-  # ����http����������ݳ���
+  # 设置http交互最大内容长度
   maxHttpContentLength: 1048576
-  # socket��������С����ֻ����һ���˿�boss�߳���Ϊ1���ɣ�
+  # socket连接数大小（如只监听一个端口boss线程组为1即可）
   bossCount: 1
   workCount: 100
   allowCustomRequests: true
-  # Э��������ʱʱ�䣨���룩��Ĭ��10�롣HTTP��������ΪwsЭ�鳬ʱʱ��
+  # 协议升级超时时间（毫秒），默认10秒。HTTP握手升级为ws协议超时时间
   upgradeTimeout: 1000000
-  # Ping��Ϣ��ʱʱ�䣨���룩��Ĭ��60�룬���ʱ������û�н��յ�������Ϣ�ͻᷢ�ͳ�ʱ�¼�
+  # Ping消息超时时间（毫秒），默认60秒，这个时间间隔内没有接收到心跳消息就会发送超时事件
   pingTimeout: 6000000
-  # Ping��Ϣ��������룩��Ĭ��25�롣�ͻ��������������һ��������Ϣ���
+  # Ping消息间隔（毫秒），默认25秒。客户端向服务器发送一条心跳消息间隔
   pingInterval: 25000
 
 server:

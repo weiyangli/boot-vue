@@ -1,11 +1,13 @@
 package com.boot.bvserver.security;
 
+import com.alibaba.fastjson.JSONObject;
 import com.boot.bvserver.bean.Constant;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.bean.ResultEnum;
 import com.boot.bvserver.bean.Role;
 import com.boot.bvserver.bean.User;
 import com.boot.bvserver.dao.UserDao;
+import com.boot.bvserver.util.SecurityUtils;
 import com.boot.bvserver.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +57,12 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         // [2] 将 token 写入 response
+        JSONObject jsonObject = new JSONObject();
         String token = tokenService.generateToken(user);
+        jsonObject.put("token", token);
+        jsonObject.put("user", SecurityUtils.getLoginUser());
         response.setContentType("application/json;charset=utf-8");
-        Result respBean = Result.ok(token);
+        Result respBean = Result.ok(jsonObject);
         ObjectMapper om = new ObjectMapper();
         PrintWriter out = response.getWriter();
         out.write(om.writeValueAsString(respBean));

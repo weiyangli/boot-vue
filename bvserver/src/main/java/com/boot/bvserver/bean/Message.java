@@ -3,10 +3,7 @@ package com.boot.bvserver.bean;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -18,17 +15,25 @@ import java.util.Date;
 public class Message {
 
     private final static int VALIDITY_DAY = 7;  // 消息有效期
-    @Id
-    private Long id;                            // 消息 ID: 注解 @Id 对应 MongoDB 的 _id
-    private String message;                     // 消息内容
-    private Date date;                          // 创建时间
-    private int groupId;                        // 群组 id
+    private Long userId;                        // 发送人 id
+    private String chatId;                      // 当前聊天窗口唯一 id (两人聊天为接收人id 拼接发送人 id, 群组聊天为群组 groupId)
+    private String content;                     // 消息内容
+    private String title;                       // 消息标题
+    private Date date = new Date();             // 创建时间
     private Date validityDate;                  // 有效期
     private int type;                           // 消息类型 1：个人消息 2：群组消息
 
     // 有效期设置为 7 天
-    public void setValidityDate() {
-        this.validityDate = DateUtils.addDays(new Date(), 7);
+    public Date getValidityDate() {
+        return DateUtils.addDays(new Date(), 7);
+    }
+
+    public Message(Long userId, String chatId, String title, String content, int type) {
+        this.userId = userId;
+        this.chatId = chatId;
+        this.content = content;
+        this.title = title;
+        this.type = type;
     }
 
 }

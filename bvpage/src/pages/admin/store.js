@@ -12,12 +12,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: null,
+        user: null,
     },
     mutations: {
         // 登录成功将, token保存在localStorage中
         SET_LOGIN: (state, data) => {
-            localStorage.setItem('JWT_TOKEN', data)
-            state.token = data;
+            localStorage.setItem('JWT_TOKEN', data.token);
+            state.token = data.token;
+            state.user = data.user;
         },
         // 退出登录将, 清空 localStorage 中 token 和 菜单
         SET_LOGOUT: (state) => {

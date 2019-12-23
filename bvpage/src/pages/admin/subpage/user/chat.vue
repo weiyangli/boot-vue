@@ -6,13 +6,13 @@
                 <Button icon="md-add" size="small" title="添加小组"/>
             </div>
             <div class="chat-name">
-                <div v-for="(name,index) in names" :key="index" @click="changeGroup(name)" :class="{ actived: name == pickName }" class="chat-box">
-                    <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
-                    <span class="person">{{ name }}</span>
+                <div v-for="(user, index) in users" :key="index" @click="changeGroup(user.id)" :class="{ actived: user.id == currentUserId }" class="chat-box">
+                    <Avatar :src="user.photo || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
+                    <span class="person">{{ user.nickname }}</span>
                 </div>
             </div>
         </div>
-        <Chat class="chat-box" :chatId="chatId"/>
+        <Chat v-if="openChatWindow" class="chat-box" :chatId="chatId" :userId="`${user.id}`"/>
     </Card>
 </template>
 
@@ -23,21 +23,56 @@ export default {
     components: { Chat },
     data() {
         return {
-            names: ['张三广东省非规', '李四', '王五','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四','张三', '李四'],
-            pickName: '',
-            chatId: '2',
+            users: [],
+            currentUserId: '',
+            chatId: '',
+            openChatWindow: false,
+            user: null
         }
     },
     mounted() {
     },
     created() {
+        // 查询当前登陆用户
+        this.findCurrentUser();
+        // 查询所有用户信息
+        this.findUsers();
     },
     methods: {
-        changeGroup(name) {
-            this.pickName = name;
+        // 切换用户同时切换聊天窗口
+        changeGroup(userId) {
+            this.openChatWindow = false;
+            this.currentUserId = userId;
+            let self = this;
+            setTimeout( () => {
+                this.openChatWindow = true;
+            }, 500)
         },
+        findUsers() {
+            let self = this;
+            this.$UserDao.findUsers().then((data) => {
+                self.users.push(...data);
+            }).catch((desc) => {
+                this.$Message.error(desc);
+            });
+        },
+        findCurrentUser() {
+            let self = this;
+            this.$UserDao.findCurrentUser().then((data) => {
+                self.user = data;
+            }).catch((desc) => {
+                this.$Message.error(desc);
+            });
+        }
     },
     computed: {
+    },
+    watch: {
+     // 切换聊天对象 
+      currentUserId(newValue) {
+          let userId = this.user.id; 
+          this.chatId = parseInt(userId) - parseInt(newValue) < 0 ? `${userId}_${newValue}` : `${newValue}_${userId}`;
+      }
     }
 };
 </script>

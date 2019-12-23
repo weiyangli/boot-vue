@@ -61,6 +61,6 @@ export default {
 <style lang="scss">
     .but-box {
         text-align: end;
-        padding: 16px;
+        padding: 10px;
     }
 </style>
