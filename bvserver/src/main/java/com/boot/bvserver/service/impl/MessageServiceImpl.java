@@ -55,7 +55,6 @@ public class MessageServiceImpl implements MessageService {
             String loginUser = getParamsByClient(client).get("chatId").get(0);
             clientMap.put(loginUser, client);
         });
-
         // 监听客户端断开连接
         socketIOServer.addDisconnectListener(client -> {
             String loginUser = getParamsByClient(client).get("chatId").get(0);
@@ -91,7 +90,7 @@ public class MessageServiceImpl implements MessageService {
     public void pushMessageToUser(Message message) {
         SocketIOClient socketIOClient = clientMap.get(message.getChatId());
         if (socketIOClient != null) {
-            socketIOClient.sendEvent(PUSH_EVENT, message);
+            socketIOClient.sendEvent(message.getChatId(), message);
         }
     }
 

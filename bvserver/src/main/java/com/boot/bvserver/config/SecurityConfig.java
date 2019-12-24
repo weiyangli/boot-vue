@@ -121,7 +121,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // 系统使用 token 进行校验，禁用 token
+        // 系统使用 token 进行校验，禁用 session
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 在认证用户名之前检验 token 是否有效
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

@@ -50,7 +50,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27000
+      port: 27017
       database: chat
 mybatis:
   mapper-locations: classpath:mybatis/**/*Mapper.xml

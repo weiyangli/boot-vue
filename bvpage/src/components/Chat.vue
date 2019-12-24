@@ -49,17 +49,26 @@ export default {
             console.log('连接成功')
         });
         // 接收后端发送过来的消息
-        socket.on('push_event', function (data) {
+        socket.on(this.chatId, function (data) {
             console.log(data);
             _this.messages.push(data);
         });
         socket.on('disconnect', function () {
             console.log('已经下线')
         });
+         //收到有新的人加入房间的信息
+        socket.on('system', function(data){
+            console.log(data);
+        });
+       //收到我离开的信息
+        socket.on('leavehint', function(data){
+                console.log(data);
+        });
         // 滚动条默认在最底部
         this.scrollToBottom();
     },
     created() {
+        this.join(chatId);
     },
     methods: {
         // 获取富文本内容
@@ -90,6 +99,14 @@ export default {
         // 关闭连接
         onclose() {
             this.socket.onclose();
+        },
+        // 加入房间
+        join(name) {
+            this.socket.emit('join', name);
+        },
+        // 离开房间
+        leave(name) {
+            this.socket.emit('leave', name);
         }
     },
     computed: {
