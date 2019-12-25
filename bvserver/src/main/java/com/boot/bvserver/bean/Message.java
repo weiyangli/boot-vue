@@ -16,20 +16,18 @@ import java.util.Date;
 public class Message {
 
     private final static int VALIDITY_DAY = 7;  // 消息有效期
+    public static final String MESSAGE_GROUP = "message_group"; // 群发消息集合名
+    public static final String MESSAGE_USER  = "message_user";  // 用户消息集合名
     @Id
     private Long id;
     private Long userId;                        // 发送人 id
+    private Long receiveId;                     // 接收人 id(群组消息为 groupId)
     private String chatId;                      // 当前聊天窗口唯一 id (两人聊天为接收人id 拼接发送人 id, 群组聊天为群组 groupId)
     private String content;                     // 消息内容
     private String title;                       // 消息标题
-    private Date date = new Date();             // 创建时间
+    private Date date;                          // 创建时间
     private Date validityDate;                  // 有效期
     private int type;                           // 消息类型 1：个人消息 2：群组消息
-
-    // 有效期设置为 7 天
-    public Date getValidityDate() {
-        return DateUtils.addDays(new Date(), 7);
-    }
 
     public Message() {
 

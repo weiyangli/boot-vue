@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
 import  Wangeditor from '@/components/Wangeditor';
 
 export default {
@@ -30,45 +29,20 @@ export default {
     },
     data() {
         return {
-            contentUrl: 'http://127.0.0.1:9099',
-            messages: [  ],
-            socket: null
+            contentUrl: '/ws/chat/point',
+            messages: [ ],
+            stompClient: null
         }
     },
     watch: {
     },
     mounted() {
-        let _this = this;
-        let opts = {
-            query: `chatId=${this.chatId}`
-        };
-        // socketIo连接的服务器信息，就是我们后端配置的信息
-        let socket = io.connect(this.contentUrl, opts);
-        this.socket = socket;
-        socket.on('connect', function () {
-            console.log('连接成功')
-        });
-        // 接收后端发送过来的消息
-        socket.on(this.chatId, function (data) {
-            console.log(data);
-            _this.messages.push(data);
-        });
-        socket.on('disconnect', function () {
-            console.log('已经下线')
-        });
-         //收到有新的人加入房间的信息
-        socket.on('system', function(data){
-            console.log(data);
-        });
-       //收到我离开的信息
-        socket.on('leavehint', function(data){
-                console.log(data);
-        });
+        // 连接 ws 
+        this.connection();
         // 滚动条默认在最底部
         this.scrollToBottom();
     },
     created() {
-        this.join(chatId);
     },
     methods: {
         // 获取富文本内容
@@ -79,35 +53,56 @@ export default {
                     userId: this.userId,
                     chatId: this.chatId,
                     content: content,
+                    receiveId: 2,
                     type: 1
                 }
                 // 发送消息
-                this.$MessageDao.sendMessage(messgae).then((data) => {
-                }).catch((desc) => {
-                    this.$Message.error(desc);
-                });
+                this.sendMessage(messgae);
             }
             // 清楚已发送的文本
             this.$refs.editor.cleanContent();
         },
+        // 滚动条在最底部
         scrollToBottom() {
             this.$nextTick(() => {
                 let container = this.$el.querySelector("#content");
                 container.scrollTop = container.scrollHeight;
             })
         },
-        // 关闭连接
-        onclose() {
-            this.socket.onclose();
+        // 连接 ws
+        connection() {
+            // 建立连接对象
+            let socket = new SockJS(this.contentUrl);
+            // 获取STOMP子协议的客户端对象
+            this.stompClient = Stomp.over(socket);
+            // 定义客户端的认证信息,按需求配置
+            let headers = {
+                Authorization:''
+            }
+            // 向服务器发起websocket连接
+            this.stompClient.connect(headers,() => {
+                // 订阅服务端提供的某个 topic
+                this.stompClient.subscribe(`/user/${this.chatId}/topic/chat`, (data) => { 
+                    this.messages.push(JSON.parse(data.body));
+                });
+            }, (err) => {
+                // 连接发生错误时的处理函数
+                console.log(err);
+            });
+        }, 
+        // 发送消息到服务端
+        sendMessage(messgae) {
+            let headers = {
+                Authorization:''
+            }
+            this.stompClient.send("/ws/chat", headers, JSON.stringify(messgae));
         },
-        // 加入房间
-        join(name) {
-            this.socket.emit('join', name);
+        // 断开连接 ws
+        disconnect() {
+            if (this.stompClient) {
+                this.stompClient.disconnect();
+            }
         },
-        // 离开房间
-        leave(name) {
-            this.socket.emit('leave', name);
-        }
     },
     computed: {
     },

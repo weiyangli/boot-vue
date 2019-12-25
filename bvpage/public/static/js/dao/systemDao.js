@@ -44,7 +44,7 @@ export default class systemDao {
     }
 
     /**
-     * 生成二位码
+     * 生成二维码
      * 
      */
     static codeGenerator() {

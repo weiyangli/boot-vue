@@ -1,14 +1,10 @@
 package com.boot.bvserver.security;
 
 import com.alibaba.fastjson.JSONObject;
-import com.boot.bvserver.bean.Constant;
 import com.boot.bvserver.bean.Result;
-import com.boot.bvserver.bean.ResultEnum;
-import com.boot.bvserver.bean.Role;
 import com.boot.bvserver.bean.User;
 import com.boot.bvserver.dao.UserDao;
 import com.boot.bvserver.util.SecurityUtils;
-import com.boot.bvserver.util.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 

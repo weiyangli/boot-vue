@@ -3,28 +3,17 @@ package com.boot.bvserver.service;
 
 import com.boot.bvserver.bean.Message;
 
+import java.util.List;
+
 public interface MessageService {
-    /**
-     * 推送的事件
-     */
-    String PUSH_EVENT = "push_event";
+
+     void insertUserMessage(Message message);
 
     /**
-     * 启动服务
+     * 拉取当前用户 7 天内和指定接收人聊天的消息
      *
-     * @throws Exception
+     * @param  receiveId  接收人 id
+     * @return
      */
-    void start() throws Exception;
-
-    /**
-     * 停止服务
-     */
-    void stop();
-
-    /**
-     * 推送信息
-     *
-     * @param message
-     */
-    void pushMessageToUser(Message message);
+     List<Message> pullMessage(Long receiveId);
 }

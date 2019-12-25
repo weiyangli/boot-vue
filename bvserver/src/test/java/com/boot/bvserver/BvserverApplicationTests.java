@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BvserverApplicationTests {
@@ -21,9 +23,8 @@ public class BvserverApplicationTests {
 
     @Test
     public void mongodbTest() {
-        Message message = new Message();
-        message.setId(1111111l).setChatId("485454").setContent("你好").setTitle("today").setType(1);
-        mongoTemplate.save(message);
+        List<Message> messageList = messageService.pullMessage(2l);
+        System.out.println("---------");
     }
 
 }

@@ -63,7 +63,7 @@ export default {
             }).catch((desc) => {
                 this.$Message.error(desc);
             });
-        }
+        },
     },
     computed: {
     },
