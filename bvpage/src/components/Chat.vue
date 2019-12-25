@@ -129,7 +129,7 @@ export default {
                     margin-right: 12px;
                     padding: 10px;
                     border-radius: 5px;
-                    max-width: 400px;
+                    /*max-width: 400px;*/
                 }
                 .self {
                     background-color: rgb(157, 234, 106);
@@ -144,7 +144,7 @@ export default {
     .editor-box {
         height: 40%;
         .w-e-text-container {
-            height: 140px !important;
+            height: 150px !important;
         }
     }   
 }

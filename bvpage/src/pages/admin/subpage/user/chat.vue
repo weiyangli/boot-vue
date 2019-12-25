@@ -6,7 +6,7 @@
                 <Button icon="md-add" size="small" title="添加小组"/>
             </div>
             <div class="chat-name">
-                <div v-for="(user, index) in users" :key="index" @click="changeGroup(user.id)" :class="{ actived: user.id == currentUserId }" class="chat-box">
+                <div v-for="(user, index) in users" :key="index" @click="changeGroup(user.id)" :class="{ actived: user.id == currentUserId }" class="chat-person">
                     <Avatar :src="user.photo || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
                     <span class="person">{{ user.nickname }}</span>
                 </div>
@@ -43,6 +43,7 @@ export default {
         changeGroup(userId) {
             this.openChatWindow = false;
             this.currentUserId = userId;
+            // 查询和当前交流对象的历史记录
             let self = this;
             setTimeout( () => {
                 this.openChatWindow = true;
@@ -85,9 +86,10 @@ export default {
         padding: 0;
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
     }
     .chat-list {
-        width: 300px;
+        width: 20%;
         border: 1px solid #dcdee2;
         .serach-input{
             padding: 10px;
@@ -100,7 +102,7 @@ export default {
         .chat-name {
             max-height: calc(100vh - 151px);
             overflow: auto;
-            .chat-box {
+            .chat-person {
                 border-bottom: 1px solid #dcdee2;
                 padding: 10px;
                 .person {
@@ -118,7 +120,7 @@ export default {
         }
     }
     .chat-box {
-        width: 100%;
+        width: 80%;
     }
 }
 </style>
