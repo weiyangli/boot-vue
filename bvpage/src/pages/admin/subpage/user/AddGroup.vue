@@ -16,7 +16,7 @@ import  IviewTransfer from '@/components/IviewTransfer';
 
 export default {
     props: {
-        id: { type: String },    // 当前用户 id
+        userId: { type: String },    // 当前用户 id
     },
     components: { IviewTransfer },
     data() {
@@ -53,7 +53,7 @@ export default {
             // 将当前用户放入群聊中
             this.group.userIds.push(this.userId);
             this.$MessageDao.createdGroup(this.group).then((data) => {
-                self.group.userId = [];
+                self.group.userIds = [];
                 self.group.groupName = '';
                 self.$Message.info("创建成功!");
                 self.$emit("exitCreate");

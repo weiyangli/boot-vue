@@ -14,13 +14,13 @@
                 <Button icon="md-add" size="small" title="添加小组" @click="openChatWindow = false; addGroupModal = true;"/>
             </div>
             <div class="chat-name">
-                <div v-for="(chat, index) in chats" :key="index" @click="changeGroup(chat)" :class="{ actived: chat.chatId == currentchatId }" class="chat-person">
+                <div v-for="(chat, index) in chats" :key="index" @click="changeGroup(chat)" :class="{ actived: currentChat && chat.chatId == currentChat.chatId }" class="chat-person">
                     <Avatar :src="chat.picture || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
                     <span class="person">{{ chat.name }}</span>
                 </div>
             </div>
         </div>
-        <Chat v-if="openChatWindow" class="chat-box" :chatId="chat.chatId" :userId="`${user.id}`" :type="chat.type"/>
+        <Chat v-if="openChatWindow" class="chat-box" :chatId="`${currentChat.chatId}`" :userId="`${user.id}`" :type="currentChat.type"/>
     </Card>
 </template>
 
@@ -34,7 +34,7 @@ export default {
         return {
             users: [],
             groups: [],
-            chat: '',
+            currentChat: null,
             openChatWindow: false,
             user: null,
             addGroupModal: false,
@@ -48,16 +48,12 @@ export default {
         this.findCurrentUser();
         // 查询所有可聊天用户
         this.findUsers();
-        // 查询所有也加入群聊
-        this.findGroup();
-        // 将群聊和用户数据和并
-        this.mergingData();
     },
     methods: {
         // 切换用户同时切换聊天窗口
         changeGroup(chat) {
             this.openChatWindow = false;
-            this.chat = chat;
+            this.currentChat = chat;
             // 查询和当前交流对象的历史记录
             let self = this;
             setTimeout( () => {
@@ -68,17 +64,20 @@ export default {
         async findUsers() {
             let self = this;
             await this.$UserDao.findUsers().then((data) => {
-                console.log(data);
                 self.users.push(...data);
+                // 查询所有也加入群聊
+                self.findGroup();
             }).catch((desc) => {
                 self.$Message.error(desc);
             });
         },
         // 查询加入的所有群聊
-        async findGroup() {
+         findGroup() {
             let self = this;
-            await this.$MessageDao.findGroupByUserId().then((data) => {
+            this.$MessageDao.findGroupByUserId().then((data) => {
                 self.groups.push(...data);
+                // 将群聊和用户数据和并
+                self.mergingData();
             }).catch((desc) => {
                 self.$Message.error(desc);
             });
@@ -88,11 +87,12 @@ export default {
             this.chats = [];
             // 合并用户数据
             for (let user of this.users) {
-                this.chats.push({ chatId: `${this.user.id}_${user.id}`, name: user.nickname, picture: user.picture, type: 1 })
+                let chatId = parseInt(this.user.id) - parseInt(user.id) > 0 ? `${user.id}_${this.user.id}` : `${this.user.id}_${user.id}`;
+                this.chats.push({ chatId: chatId, name: user.nickname, picture: user.picture, type: 1 });
             }
             // 合并群组数据
             for (let group of this.groups) {
-                this.chats.push({ chatId: group.id, name: group.groupName, picture: group.picture, type: 2 })
+                this.chats.push({ chatId: group.id, name: group.groupName, picture: group.picture, type: 2 });
             }
         },
         // 查询当前登录用户

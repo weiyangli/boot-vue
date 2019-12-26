@@ -55,8 +55,7 @@ export default {
                     userId: this.userId,
                     chatId: this.chatId,
                     content: content,
-                    receiveId: 2,
-                    type: 1
+                    type: this.type,
                 }
                 // 发送消息
                 this.sendMessage(messgae);
