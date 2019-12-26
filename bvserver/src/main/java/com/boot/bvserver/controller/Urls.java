@@ -14,6 +14,10 @@ public interface Urls {
     String API_USER = "/api/users";                      // 查询、添加、修改用户
 
     // 消息
-    String API_MESSAGE = "/api/messages";                // 查询消息
-    String API_SEND_MESSAGE = "/api/send/message";       // 发送消息
+    String API_MESSAGE = "/api/messages";                                 // 查询消息
+    String API_SEND_MESSAGE = "/api/send/messages";                       // 发送消息
+    String API_PULL_MESSAGE = "/api/pull/messages/{chatId}/{type}";       // 拉取消息
+
+    // 上传文件
+    String API_FILE_UPLOAD = "/api/file/upload";                          // 上传文件
 }

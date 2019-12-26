@@ -71,7 +71,7 @@
                 if (name == 'logout') {
                     this.logout();
                 }
-            }
+            },
         }
     }
 </script>

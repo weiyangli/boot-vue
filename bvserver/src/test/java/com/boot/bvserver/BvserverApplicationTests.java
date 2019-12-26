@@ -1,7 +1,9 @@
 package com.boot.bvserver;
 
 import com.boot.bvserver.bean.Message;
+import com.boot.bvserver.bean.MessageType;
 import com.boot.bvserver.service.MessageService;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,8 +25,13 @@ public class BvserverApplicationTests {
 
     @Test
     public void mongodbTest() {
-        List<Message> messageList = messageService.pullMessage(2l);
-        System.out.println("---------");
+        Message message = new Message();
+        message.setId(1111111l).setChatId("1_2").setContent("你好").setTitle("today").setType(1)
+        .setValidityDate(DateUtils.addDays(new Date(), 7)).setReceiveId(2l).setUserId(1l);
+        mongoTemplate.save(message, MessageType.getValueByCode(1));
+    }
+
+    public static void main(String[] args) {
     }
 
 }

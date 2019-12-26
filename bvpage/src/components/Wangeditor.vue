@@ -20,7 +20,7 @@ export default {
     methods: {
         commitContent() {
             let contentDom = $(".w-e-text");
-            if (!contentDom.html()) {
+            if (!contentDom.text()) {
                 this.$Message.warning("请输入内容");
                 return;
             }

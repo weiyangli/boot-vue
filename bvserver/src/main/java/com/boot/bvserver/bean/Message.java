@@ -2,7 +2,6 @@ package com.boot.bvserver.bean;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
@@ -16,8 +15,6 @@ import java.util.Date;
 public class Message {
 
     private final static int VALIDITY_DAY = 7;  // 消息有效期
-    public static final String MESSAGE_GROUP = "message_group"; // 群发消息集合名
-    public static final String MESSAGE_USER  = "message_user";  // 用户消息集合名
     @Id
     private Long id;
     private Long userId;                        // 发送人 id

@@ -1,13 +1,14 @@
 package com.boot.bvserver.service.impl;
 
+import com.boot.bvserver.bean.ChatGroup;
 import com.boot.bvserver.bean.Message;
+import com.boot.bvserver.bean.MessageType;
+import com.boot.bvserver.dao.MessageDao;
 import com.boot.bvserver.service.MessageService;
 import com.boot.bvserver.util.IdWorker;
 import com.boot.bvserver.util.SecurityUtils;
-import com.boot.bvserver.util.Utils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -24,6 +25,9 @@ public class MessageServiceImpl implements MessageService {
     private MongoTemplate mongoTemplate;
 
     @Autowired
+    private MessageDao messageDao;
+
+    @Autowired
     private IdWorker idWorker;
 
     /**
@@ -32,23 +36,50 @@ public class MessageServiceImpl implements MessageService {
      * @param message  消息
      */
     public void insertUserMessage(Message message){
-        message.setId(idWorker.nextId()).setDate(new Date()).setValidityDate(DateUtils.addDays(new Date(), 7));
-        mongoTemplate.save(message, message.getType() == 1 ? Message.MESSAGE_USER : Message.MESSAGE_GROUP);
+        // mongoTemplate 插入的时间是 UTC 比我们慢 8 小时
+        Date now = DateUtils.addHours(new Date(), 8);
+        message.setId(idWorker.nextId()).setDate(now).setValidityDate(DateUtils.addDays(now, 7));
+        mongoTemplate.save(message, MessageType.getValueByCode(message.getType()));
     }
 
     /**
      * 拉取当前用户 7 天内和指定接收人聊天的消息
      *
-     * @param  receiveId  接收人 id
+     * @param  chatId  聊天窗口 id
      * @return
      */
-    public List<Message> pullMessage(Long receiveId) {
-        Criteria criteria = Criteria.where("receiveId").is(receiveId)
-                .and("userId").is(1l)
-                .and("validityDate").gt(new Date());
-        List<Message> groupMessages = mongoTemplate.find(Query.query(criteria), Message.class, Message.MESSAGE_GROUP);
-        List<Message> userMessages = mongoTemplate.find(Query.query(criteria), Message.class, Message.MESSAGE_USER);
-        groupMessages.addAll(userMessages);
-        return groupMessages;
+    public List<Message> pullMessages(String chatId, int type) {
+        Criteria criteria = Criteria.where("chatId").is(chatId)
+                .and("validityDate").gt(DateUtils.addHours(new Date(), 8));
+        return mongoTemplate.find(Query.query(criteria), Message.class, MessageType.getValueByCode(type));
+    }
+
+    /**
+     * 创建小组
+     *
+     * @param chatGroup
+     */
+    public ChatGroup createdGroup(ChatGroup chatGroup){
+        // 1. 创建聊天组
+        // 2. 建立用户和小组关系
+
+        // [1] 创建聊天组
+        chatGroup.setId(idWorker.nextId());
+        chatGroup.setCreatedBy(SecurityUtils.getLoginUserId());
+        chatGroup.setUpdatedBy(SecurityUtils.getLoginUserId());
+        messageDao.createdGroup(chatGroup);
+
+        // [2] 建立用户和小组关系
+        messageDao.createdUserGroups(chatGroup.getUserIds(), chatGroup.getId());
+        return chatGroup;
+    }
+
+    /**
+     * 查询当前用户加入的所有群聊
+     *
+     * @return
+     */
+    public List<ChatGroup> findGroupByUserId() {
+        return messageDao.findGroupByUserId(SecurityUtils.getLoginUserId());
     }
 }

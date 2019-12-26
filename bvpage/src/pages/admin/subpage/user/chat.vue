@@ -1,33 +1,44 @@
 <template>
     <Card dis-hover class="chat">
+        <!-- 创建群聊弹窗 -->
+        <Modal v-if="addGroupModal" ref="modal" v-model="addGroupModal"
+            title="创建群聊"
+            footer-hide
+            :mask-closable="false"
+            class="message-modal">
+            <AddGroup :userId="`${user.id}`" @exitCreate="addGroupModal = false;"/>
+        </Modal>
         <div class="chat-list">
             <div class="serach-input">
                 <Input search enter-button placeholder="搜索"/>
-                <Button icon="md-add" size="small" title="添加小组"/>
+                <Button icon="md-add" size="small" title="添加小组" @click="openChatWindow = false; addGroupModal = true;"/>
             </div>
             <div class="chat-name">
-                <div v-for="(user, index) in users" :key="index" @click="changeGroup(user.id)" :class="{ actived: user.id == currentUserId }" class="chat-person">
-                    <Avatar :src="user.photo || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
-                    <span class="person">{{ user.nickname }}</span>
+                <div v-for="(chat, index) in chats" :key="index" @click="changeGroup(chat)" :class="{ actived: chat.chatId == currentchatId }" class="chat-person">
+                    <Avatar :src="chat.picture || 'https://i.loli.net/2017/08/21/599a521472424.jpg'" />
+                    <span class="person">{{ chat.name }}</span>
                 </div>
             </div>
         </div>
-        <Chat v-if="openChatWindow" class="chat-box" :chatId="chatId" :userId="`${user.id}`"/>
+        <Chat v-if="openChatWindow" class="chat-box" :chatId="chat.chatId" :userId="`${user.id}`" :type="chat.type"/>
     </Card>
 </template>
 
 <script>
 import Chat from '@/components/Chat';
+import AddGroup from './AddGroup';
 
 export default {
-    components: { Chat },
+    components: { Chat, AddGroup },
     data() {
         return {
             users: [],
-            currentUserId: '',
-            chatId: '',
+            groups: [],
+            chat: '',
             openChatWindow: false,
-            user: null
+            user: null,
+            addGroupModal: false,
+            chats: [],
         }
     },
     mounted() {
@@ -35,45 +46,68 @@ export default {
     created() {
         // 查询当前登陆用户
         this.findCurrentUser();
-        // 查询所有用户信息
+        // 查询所有可聊天用户
         this.findUsers();
+        // 查询所有也加入群聊
+        this.findGroup();
+        // 将群聊和用户数据和并
+        this.mergingData();
     },
     methods: {
         // 切换用户同时切换聊天窗口
-        changeGroup(userId) {
+        changeGroup(chat) {
             this.openChatWindow = false;
-            this.currentUserId = userId;
+            this.chat = chat;
             // 查询和当前交流对象的历史记录
             let self = this;
             setTimeout( () => {
                 this.openChatWindow = true;
             }, 500)
         },
-        findUsers() {
+        // 查询聊天用户集合
+        async findUsers() {
             let self = this;
-            this.$UserDao.findUsers().then((data) => {
+            await this.$UserDao.findUsers().then((data) => {
+                console.log(data);
                 self.users.push(...data);
             }).catch((desc) => {
-                this.$Message.error(desc);
+                self.$Message.error(desc);
             });
         },
+        // 查询加入的所有群聊
+        async findGroup() {
+            let self = this;
+            await this.$MessageDao.findGroupByUserId().then((data) => {
+                self.groups.push(...data);
+            }).catch((desc) => {
+                self.$Message.error(desc);
+            });
+        },
+        // 合并数据
+        mergingData() {
+            this.chats = [];
+            // 合并用户数据
+            for (let user of this.users) {
+                this.chats.push({ chatId: `${this.user.id}_${user.id}`, name: user.nickname, picture: user.picture, type: 1 })
+            }
+            // 合并群组数据
+            for (let group of this.groups) {
+                this.chats.push({ chatId: group.id, name: group.groupName, picture: group.picture, type: 2 })
+            }
+        },
+        // 查询当前登录用户
         findCurrentUser() {
             let self = this;
             this.$UserDao.findCurrentUser().then((data) => {
                 self.user = data;
             }).catch((desc) => {
-                this.$Message.error(desc);
+                self.$Message.error(desc);
             });
         },
     },
     computed: {
     },
     watch: {
-     // 切换聊天对象 
-      currentUserId(newValue) {
-          let userId = this.user.id; 
-          this.chatId = parseInt(userId) - parseInt(newValue) < 0 ? `${userId}_${newValue}` : `${newValue}_${userId}`;
-      }
     }
 };
 </script>

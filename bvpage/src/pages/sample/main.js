@@ -5,8 +5,11 @@ import store  from './store';
 import '@/plugins/iview';
 
 import DemoDao  from '@/../public/static/js/dao/dao';
+import UserDao  from '@/../public/static/js/dao/userDao';
 
 Vue.prototype.$DemoDao   = DemoDao;
+Vue.prototype.$UserDao   = UserDao;
+
 new Vue({
     render: h => h(App),
     router,

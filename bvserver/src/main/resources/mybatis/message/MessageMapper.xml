@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.bvserver.dao.MessageDao">
+    <insert id="createdGroup">
+        INSERT INTO chat_group (id, `group_name`, created_time, created_by)
+        VALUES (#{id}, #{groupName}, now(), #{createdBy})
+    </insert>
+
+    <insert id="createdUserGroups">
+        INSERT INTO user_group (user_id, group_id)
+        VALUES
+        <foreach collection="userIds" item="item" separator=",">
+            (
+                #{item},
+                #{groupId}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 查询当前用户加入的所有聊天群 -->
+    <select id="findGroupByUserId" resultType="com.boot.bvserver.bean.ChatGroup">
+        SELECT group_name groupName, cg.id, cg.created_by createdBy, cg.picture picture
+        FROM chat_group cg
+        LEFT JOIN user_group ug ON cg.id = ug.group_id
+        LEFT JOIN `user` ON ug.user_id = `user`.id
+        WHERE `user`.id = #{userId}
+    </select>
+</mapper>

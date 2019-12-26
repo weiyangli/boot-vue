@@ -37,4 +37,8 @@ public final class SecurityUtils {
         Object p = auth.getPrincipal();
         return (p instanceof User) ? (User) p : null;
     }
+
+    public static Long getLoginUserId() {
+        return getLoginUser().getId();
+    }
 }

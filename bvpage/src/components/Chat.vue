@@ -26,6 +26,7 @@ export default {
     props: {
         userId: { type: String },    // 当前用户 id
         chatId: { type: String },    // 当前聊天窗 id (接受人 id 或者接收群组 id)
+        type: { type: Number },      // 消息类型 1： 普通消息 2：群组消息
     },
     data() {
         return {
@@ -43,6 +44,7 @@ export default {
         this.scrollToBottom();
     },
     created() {
+        this.pullMessages();
     },
     methods: {
         // 获取富文本内容
@@ -103,8 +105,17 @@ export default {
                 this.stompClient.disconnect();
             }
         },
+        // 拉取当前聊天窗口历史信息
+        pullMessages() {
+            let self = this;
+            this.$MessageDao.pullMessages(this.chatId, this.type).then((data) => {
+                self.messages.push(...data);
+            }).catch((desc) => {
+                this.$Message.error(desc);
+            });
+        }
     },
-    computed: {
+    computed: { 
     },
     updated() {
         this.scrollToBottom();
