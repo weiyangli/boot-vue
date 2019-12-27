@@ -5,6 +5,7 @@ import com.boot.bvserver.bean.UploadedFile;
 import com.boot.bvserver.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,8 +44,8 @@ public class FileController {
      * @throws IOException 读取文件出错时抛出异常
      */
     @GetMapping(Urls.API_FILE_READ)
-    public void accessTemporaryFile(@RequestParam("date") String date,
-                                    @RequestParam("filename") String filename,
+    public void accessTemporaryFile(@PathVariable("date") String date,
+                                    @PathVariable("filename") String filename,
                                     HttpServletRequest request,
                                     HttpServletResponse response) throws IOException {
         fileService.readTemporaryFileToResponse(date, filename, request, response);

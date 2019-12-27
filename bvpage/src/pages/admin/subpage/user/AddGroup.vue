@@ -2,6 +2,13 @@
     <div class="add-group">
         <div class="add-group-content">
             <Input v-model="group.groupName" placeholder="群聊名称"/>
+            <div style="display: flex; margin-top: 10px; magin-bottom: 10px; height:100px">
+                <span style="margin-right: 10px;font-weight: bold">头像:</span>
+                <div v-if="group.picture" class="group-picture">
+                    <img :src="group.picture" />
+                </div>
+                <FileUploader ref="fileUploader" :uploadButton="true" image @on-success="fileUploaded" />
+            </div>
             <IviewTransfer ref="transfer" @commitKeys="pickUsers" class="trans-box"/>
         </div>
         <div style="display: flex; justify-content: flex-end">
@@ -13,16 +20,18 @@
 
 <script>
 import  IviewTransfer from '@/components/IviewTransfer';
+import FileUploader from '@/components/FileUploader';
 
 export default {
     props: {
         userId: { type: String },    // 当前用户 id
     },
-    components: { IviewTransfer },
+    components: { IviewTransfer, FileUploader },
     data() {
         return {
             group: {
                 groupName: '',
+                picture: '',  // 头像
                 userIds: [],
             }
         };
@@ -37,7 +46,7 @@ export default {
         // 退出创建群组
         exitCreate() {
             this.$refs.transfer.resetData();
-            this.$emit("exitCreate");
+            this.$emit('exitCreate');
         },
         // 创建小组
         createGroup() {
@@ -56,11 +65,14 @@ export default {
                 self.group.userIds = [];
                 self.group.groupName = '';
                 self.$Message.info("创建成功!");
-                self.$emit("exitCreate");
+                self.$emit('exitCreate');
             }).catch((desc) => {
                 self.$Message.error(desc);
             });
-        }
+        },
+        fileUploaded(file) {
+            this.group.picture = file.url;
+        },
     }
 };
 </script>
@@ -71,6 +83,18 @@ export default {
         .trans-box {
             margin-top: 12px;
         }
+    }
+}
+.group-picture {
+    box-sizing: border-box;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    transition: border 0.5s;
+    color: white;
+    margin-right: 10px;
+    img {
+        width: 75px;
+        height: 100px;
     }
 }
 </style>

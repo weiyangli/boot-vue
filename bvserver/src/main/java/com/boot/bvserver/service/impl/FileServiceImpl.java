@@ -1,7 +1,6 @@
 package com.boot.bvserver.service.impl;
 
 import com.boot.bvserver.bean.UploadedFile;
-import com.boot.bvserver.controller.Urls;
 import com.boot.bvserver.dao.CommonDao;
 import com.boot.bvserver.service.FileService;
 import com.boot.bvserver.util.IdWorker;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +30,8 @@ public class FileServiceImpl implements FileService {
 
     @Value("${file.path}")
     private String filePath;   // 上传文件的路径
+
+    private String API_PATH = "/api/file/read";
 
     @Autowired
     private IdWorker idWorker;
@@ -55,8 +55,8 @@ public class FileServiceImpl implements FileService {
         InputStream inputStream = file.getInputStream();                           // 文件流
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); // 获取文件后缀
         Long fileId = idWorker.nextId();                                           // 文件 id 作为临时文件名
-        String targetFilePath = String.format("%s/%s", generateTargetFilePath(), fileId + extension); // 文件上传地址
-        String accessingPath = String.format("%s/%s/%s", Urls.API_FILE_READ, Utils.DateToString(new Date(), "yyyy-MM-dd"), fileId + extension);        // 文件访问地址
+        String targetFilePath = String.format("%s/%s", generateTargetFilePath(), fileId + "." + extension); // 文件上传地址
+        String accessingPath = String.format("%s/%s/%s", API_PATH, Utils.DateToString(new Date(), "yyyy-MM-dd"), fileId + "." + extension);        // 文件访问地址
         // [2] 上传文件
         File tempFile = new File(targetFilePath);
         FileUtils.copyInputStreamToFile(inputStream, tempFile);
@@ -104,7 +104,7 @@ public class FileServiceImpl implements FileService {
      * @return
      */
     private File getTemporaryFileForFilename(String filename, String date) {
-        return new File(String.format("%s%s/%", filePath, date, filename));
+        return new File(String.format("%s%s/%s", filePath, date, filename));
     }
 
     /**

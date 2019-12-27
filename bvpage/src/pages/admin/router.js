@@ -47,6 +47,6 @@ export default new Router({
                     component: () => import('./subpage/statistic-analysis/analysis.vue'),
                 },
             ]
-        }
+        },
     ],
 });

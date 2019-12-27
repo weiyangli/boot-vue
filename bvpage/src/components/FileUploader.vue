@@ -45,6 +45,7 @@
                 :multiple="multiple"
                 :accept="accept"
                 :format="format"
+                :headers="token"
                 with-credentials
                 type="drag">
                 <div style="padding: 60px 0">
@@ -106,6 +107,7 @@ export default {
             images: ['jpg', 'jpeg', 'gif', 'png', 'bmp'], // 图片文件格式
             videos: ['mp4', 'avi', 'flv', 'swf', 'wmv', 'mov', '3gp', 'mpg', 'rmvb', 'mkv'], // 视频文件格式
             audios: ['mp3'], // 音频文件格式
+            token: { "bv_token": localStorage.getItem('JWT_TOKEN') },
         };
     },
     computed: {
@@ -205,12 +207,12 @@ export default {
             this.uploadedFiles = [];
             this.$refs.uploader.clearFiles();
         },
-        // 点击确定按钮，上传完成，如果有上传的文件则发射信号 on-success
+        // 点击确定按钮，上传完成，如果有上传的文件则发射信号
         uploadFinished() {
             if (this.uploadedFiles.length === 0) {
                 return;
             }
-
+            
             if (this.multiple) {
                 this.$emit('on-success', this.uploadedFiles);
             } else {
@@ -269,7 +271,7 @@ export default {
         showError(text) {
             this.error = true;
             this.errorText = text;
-        }
+        },
     }
 };
 </script>

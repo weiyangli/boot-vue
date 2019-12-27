@@ -13,6 +13,6 @@
 
     <!-- 根据 id 查询附件 -->
     <select id="findUploadedFileById" resultType="com.boot.bvserver.bean.UploadedFile">
-         SELECT id, filename, url, type, user_id AS userId FROM uploaded_file WHERE id = #{fileId}
+         SELECT id, filename, url, type, user_id AS userId FROM upload_file WHERE id = #{fileId}
     </select>
 </mapper>

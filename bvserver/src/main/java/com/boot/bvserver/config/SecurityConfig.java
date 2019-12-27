@@ -128,7 +128,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 // 所有用户均可访问的资源
                 .antMatchers(  "/page/login", "/login", "/page/403", "/get/value",
-                        Urls.PAGE_CODE, "/api/messages/**", "/ws/**", "/api/users").permitAll()
+                        Urls.PAGE_CODE, "/api/messages/**", "/ws/**", "/api/users", "/api/file/read/**").permitAll()
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/user/**").hasAnyRole(new String [] {"ADMIN", "ROLE_COMMON_ADMIN","ROLE_USER"})
                 // 除了上面请求其他请求都需要认证

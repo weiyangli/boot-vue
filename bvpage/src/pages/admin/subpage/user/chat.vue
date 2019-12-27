@@ -5,13 +5,14 @@
             title="创建群聊"
             footer-hide
             :mask-closable="false"
+            :styles="{top: '20px'}"
             class="message-modal">
-            <AddGroup :userId="`${user.id}`" @exitCreate="addGroupModal = false;"/>
+            <AddGroup :userId="`${user.id}`" @exitCreate="exitCreate"/>
         </Modal>
         <div class="chat-list">
             <div class="serach-input">
                 <Input search enter-button placeholder="搜索"/>
-                <Button icon="md-add" size="small" title="添加小组" @click="openChatWindow = false; addGroupModal = true;"/>
+                <Button icon="md-add" size="small" title="添加小组" @click="addGroup"/>
             </div>
             <div class="chat-name">
                 <div v-for="(chat, index) in chats" :key="index" @click="changeGroup(chat)" :class="{ actived: currentChat && chat.chatId == currentChat.chatId }" class="chat-person">
@@ -104,6 +105,13 @@ export default {
                 self.$Message.error(desc);
             });
         },
+        exitCreate() {
+            this.addGroupModal = false;
+        },
+        addGroup() {
+            this.openChatWindow = false;
+            this.addGroupModal = true;
+        }
     },
     computed: {
     },
