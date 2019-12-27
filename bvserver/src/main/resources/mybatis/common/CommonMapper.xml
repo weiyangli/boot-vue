@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.bvserver.dao.CommonDao">
+
+    <!-- 插入或者更新上传的文件 -->
+    <insert id="insertOrUpdateUploadedFile" parameterType="UploadedFile">
+        INSERT INTO upload_file (id, filename, url, type, user_id, created_time)
+        VALUES (#{id}, #{filename}, #{url}, #{type}, #{userId}, now())
+
+        ON DUPLICATE KEY
+        UPDATE filename = #{filename}, url = #{url}, type = #{type}
+    </insert>
+
+    <!-- 根据 id 查询附件 -->
+    <select id="findUploadedFileById" resultType="com.boot.bvserver.bean.UploadedFile">
+         SELECT id, filename, url, type, user_id AS userId FROM uploaded_file WHERE id = #{fileId}
+    </select>
+</mapper>

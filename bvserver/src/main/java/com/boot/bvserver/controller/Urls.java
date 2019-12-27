@@ -20,4 +20,5 @@ public interface Urls {
 
     // 上传文件
     String API_FILE_UPLOAD = "/api/file/upload";                          // 上传文件
+    String API_FILE_READ = "/api/file/read/{date}/{filename}";                   // 读取文件
 }

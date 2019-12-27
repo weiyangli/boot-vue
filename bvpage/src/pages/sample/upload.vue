@@ -1,9 +1,9 @@
 <template>
-    <!-- <FileUploader ref="fileUploader" image @on-success="fileUploaded" /> -->
+    <FileUploader ref="fileUploader" image @on-success="fileUploaded" />
 </template>
 
 <script>
-// import FileUploader from '@/components/FileUploader';
+import FileUploader from '@/components/FileUploader';
 export default {
     components: { FileUploader },
     created() {
