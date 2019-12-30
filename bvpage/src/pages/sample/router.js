@@ -20,5 +20,10 @@ export default new Router({
             component: () => import('./upload.vue'),
             // redirect: '/echarts',
         },
+        {
+            path: '/pdf',
+            component: () => import('./pdf.vue'),
+            // redirect: '/echarts',
+        },
     ],
 });

@@ -36,7 +36,7 @@ public class MessageServiceImpl implements MessageService {
      * @param message  消息
      */
     public void insertUserMessage(Message message){
-        // mongoTemplate 插入的时间是 UTC 比我们慢 8 小时
+        // mongoTemplate 插入的时间是 UTC 时区比我们慢 8 小时
         Date now = DateUtils.addHours(new Date(), 8);
         message.setId(idWorker.nextId()).setDate(now).setValidityDate(DateUtils.addDays(now, 7));
         mongoTemplate.save(message, MessageType.getValueByCode(message.getType()));

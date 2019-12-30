@@ -57,3 +57,9 @@ mybatis:
   type-aliases-package: com.boot.bvserver.bean
 file:
   path: D://bv_upload/file/
+libreOffice:
+  home: C://Program Files (x86)/OpenOffice 4
+  # 10 分钟 (毫秒)
+  processTimeout: 600000
+  # 10 分钟 (毫秒)
+  taskExecutionTimeout: 600000

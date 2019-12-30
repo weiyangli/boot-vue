@@ -1,13 +1,13 @@
 <template>
     <Card dis-hover class="chat">
         <!-- 创建群聊弹窗 -->
-        <Modal v-if="addGroupModal" ref="modal" v-model="addGroupModal"
+        <Modal ref="modal" v-model="addGroupModal"
             title="创建群聊"
             footer-hide
             :mask-closable="false"
             :styles="{top: '20px'}"
             class="message-modal">
-            <AddGroup :userId="`${user.id}`" @exitCreate="exitCreate"/>
+            <AddGroup v-if="addGroupModal" :userId="`${user.id}`" @exitCreate="exitCreate"/>
         </Modal>
         <div class="chat-list">
             <div class="serach-input">
@@ -97,10 +97,10 @@ export default {
             }
         },
         // 查询当前登录用户
-        findCurrentUser() {
+        async findCurrentUser() {
             let self = this;
-            this.$UserDao.findCurrentUser().then((data) => {
-                self.user = data;
+            await this.$UserDao.findCurrentUser().then((data) => {
+                 self.user = data;
             }).catch((desc) => {
                 self.$Message.error(desc);
             });

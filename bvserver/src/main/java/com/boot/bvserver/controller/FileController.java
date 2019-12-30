@@ -4,13 +4,11 @@ import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.bean.UploadedFile;
 import com.boot.bvserver.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,14 +34,14 @@ public class FileController {
     }
 
     /**
-     * 访问临时文件中的文件
+     * 访问临时文件中的文件(该接口访问文件支持 rang 模式，暂时使用不到使用 springmvc 静态资源访问方式 addResourceHandlers)
      * 网址: http://localhost:8080/api/file/read/2019-12-27/123.doc
      *
      * @param request  HttpServletRequest 对象
      * @param response HttpServletResponse 对象
      * @throws IOException 读取文件出错时抛出异常
      */
-    @GetMapping(Urls.API_FILE_READ)
+//    @GetMapping(Urls.API_FILE_READ)
     public void accessTemporaryFile(@PathVariable("date") String date,
                                     @PathVariable("filename") String filename,
                                     HttpServletRequest request,
