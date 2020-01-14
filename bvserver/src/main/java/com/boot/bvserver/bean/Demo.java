@@ -6,6 +6,8 @@ import lombok.Data;
 public class Demo {
     private Long id;
     private String name;
+    public Demo() {
+    }
 
     public Demo(Long id, String name) {
         this.id = id;

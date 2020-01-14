@@ -46,6 +46,7 @@ public class FileServiceImpl implements FileService {
      * @return
      * @throws IOException
      */
+    @Override
     public UploadedFile uploadFileToTemporaryDirectory(MultipartFile file) throws IOException {
         // 1. 处理文件相关信息
         // 2. 上传文件

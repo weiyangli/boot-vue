@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BvserverApplication {
 
     public static void main(String[] args) {
+        // 防止 netty 冲突报错
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(BvserverApplication.class, args);
         System.out.println("项目启动成功！");
     }

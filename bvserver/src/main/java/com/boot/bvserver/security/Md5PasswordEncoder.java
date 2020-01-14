@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 设置 security 密码校验策略
+ * @author liweiyang
  */
 public class Md5PasswordEncoder implements PasswordEncoder {
 

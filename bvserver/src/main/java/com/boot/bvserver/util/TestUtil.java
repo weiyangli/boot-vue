@@ -20,9 +20,6 @@ public class TestUtil{
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        FileInputStream fileInputStream  = new FileInputStream("D://test.txt");
-    }
     public <T,K> void getNameAndValue(T name, K value){
 
     }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MyMvcConfig implements WebMvcConfigurer {
 
     @Value("${file.path}")
-    private String filePath;   // 上传文件的路径
+    private String filePath; // 上传文件的路径
 
     /**
      * 映射没用逻辑的处理 controller 路径跳转
@@ -23,14 +23,19 @@ public class MyMvcConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 映射访问静态资源
+     * 映射访问静态资源(springsecurity 还需要配置放行)
      *
      * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/files/**").addResourceLocations("file:///C:/var/uploaded_files/");
+        // 系统上传文件浏览
         registry.addResourceHandler("/api/file/read/**").addResourceLocations("file:///" + filePath);
+        // swagger 相关静态资源映射
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
 }

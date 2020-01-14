@@ -1,10 +1,12 @@
 package com.boot.bvserver.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.bvserver.bean.ChatGroup;
 import com.boot.bvserver.bean.Message;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.service.MessageService;
 import com.boot.bvserver.util.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class MessageController {
 
     private static Logger logger = LoggerFactory.getLogger(MessageController.class.getName());
@@ -36,6 +39,7 @@ public class MessageController {
 
     @MessageMapping("/chat")
     public void sendMessage(@RequestBody Message message) {
+        log.info("插入消息{}", JSON.toJSONString(message));
         messagingTemplate.convertAndSendToUser( message.getChatId(), "/topic/chat", message);
         // 消息插入到 mongodb
         messageService.insertUserMessage(message);

@@ -115,8 +115,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        //配置静态文件不需要认证
-        web.ignoring().antMatchers("/static-x/**");
+        //配置静态文件不需要认证, swagger 相关资源不认证
+        web.ignoring().antMatchers("/static-x/**", "/v2/api-docs",//swagger api json
+                "/swagger-resources/configuration/ui",//用来获取支持的动作
+                "/swagger-resources",//用来获取api-docs的URI
+                "/swagger-resources/configuration/security",//安全选项
+                "/swagger-ui.html",  "/swagger-resources/**", "/webjars/**");
     }
 
     @Override
@@ -157,7 +161,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
-        config.setMaxAge(3600l);
+        config.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

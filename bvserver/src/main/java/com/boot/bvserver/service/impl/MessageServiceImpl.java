@@ -35,6 +35,7 @@ public class MessageServiceImpl implements MessageService {
      *
      * @param message  消息
      */
+    @Override
     public void insertUserMessage(Message message){
         // mongoTemplate 插入的时间是 UTC 时区比我们慢 8 小时
         Date now = DateUtils.addHours(new Date(), 8);
@@ -48,6 +49,7 @@ public class MessageServiceImpl implements MessageService {
      * @param  chatId  聊天窗口 id
      * @return
      */
+    @Override
     public List<Message> pullMessages(String chatId, int type) {
         Criteria criteria = Criteria.where("chatId").is(chatId)
                 .and("validityDate").gt(DateUtils.addHours(new Date(), 8));
@@ -59,6 +61,7 @@ public class MessageServiceImpl implements MessageService {
      *
      * @param chatGroup
      */
+    @Override
     public ChatGroup createdGroup(ChatGroup chatGroup){
         // 1. 创建聊天组
         // 2. 建立用户和小组关系
@@ -79,6 +82,7 @@ public class MessageServiceImpl implements MessageService {
      *
      * @return
      */
+    @Override
     public List<ChatGroup> findGroupByUserId() {
         return messageDao.findGroupByUserId(SecurityUtils.getLoginUserId());
     }
