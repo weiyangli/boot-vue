@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +30,10 @@ public class DemoController {
     @GetMapping("/get/value")
     @ApiOperation("获取数据")
     @ResponseBody
-    public String hello() {
+    public String hello() throws Exception{
+        System.out.println(Thread.currentThread().getId());
+        demoService.asyncMethod();
+        System.out.println("溜溜球");
         return "hello bootvue";
     }
 
@@ -52,3 +56,4 @@ public class DemoController {
         return "success";
     }
 }
+

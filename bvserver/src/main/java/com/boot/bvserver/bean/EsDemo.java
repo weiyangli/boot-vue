@@ -1,6 +1,5 @@
 package com.boot.bvserver.bean;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -16,10 +15,11 @@ import java.util.Date;
 public class EsDemo {
     @Id
     private Long id;
-    @Field(type= FieldType.Text, analyzer = "ik_max_word")
+    // searchAnalyzer 指定字段搜索时使用的分词器
+    @Field(type= FieldType.Text, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String content;
     private Date date;
-    @Field(type= FieldType.Text, analyzer = "ik_max_word")
+    @Field(type= FieldType.Text, searchAnalyzer = "ik_smart", analyzer = "ik_smart")
     private String level;
     private String url;
     private String price;

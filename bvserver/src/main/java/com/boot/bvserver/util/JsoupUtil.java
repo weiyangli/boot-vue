@@ -32,9 +32,8 @@ public class JsoupUtil {
     }
 
     public static void main(String[] args) throws  Exception{
-        // 一共访问18个页面
-
-        // System.out.println(document.body());
+        Document document= Jsoup.connect("https://lol.qq.com/act/a20200116Lunarnewyear/index.html").get();
+        System.out.println(document.outerHtml());
     }
 
     /**

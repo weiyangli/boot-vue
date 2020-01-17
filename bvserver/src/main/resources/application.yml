@@ -58,6 +58,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mybatis/**/*Mapper.xml
   type-aliases-package: com.boot.bvserver.bean
+  # mybatis 自动将下划线字段匹配为实体的驼峰规则(查询时)
+  configuration:
+    map-underscore-to-camel-case: true
 file:
   path: D://bv_upload/file/
 libreOffice:
@@ -66,3 +69,17 @@ libreOffice:
   processTimeout: 600000
   # 10 分钟 (毫秒)
   taskExecutionTimeout: 600000
+
+# 设置分页插件属性
+pagehelper:
+ # 数据库方言
+  helper-dialect: mysql
+  # 启用合理化时，如果 pageNum < 1 会查询第一页，如果 pageNum > pages 会查询最后一页
+  # 禁用合理化时，如果 pageNum < 1 或 pageNum > pages 会返回空数据
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  # 设置为true时，会将 RowBounds 第一个参数 offset 当成 pageNum 页码使用
+  offset-as-page-num: true
+  # 相当于没有执行分页查询，但是返回结果仍然是 Page 类型
+  page-size-zero: false

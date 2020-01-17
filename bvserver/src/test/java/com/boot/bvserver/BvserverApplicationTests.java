@@ -1,37 +1,31 @@
 package com.boot.bvserver;
 
 import com.alibaba.fastjson.JSON;
-import com.boot.bvserver.bean.Demo;
+import com.alibaba.fastjson.JSONObject;
 import com.boot.bvserver.bean.EsDemo;
 import com.boot.bvserver.bean.Message;
 import com.boot.bvserver.bean.MessageType;
+import com.boot.bvserver.bean.Question;
 import com.boot.bvserver.repository.ChatMessageRepository;
+import com.boot.bvserver.service.DemoService;
 import com.boot.bvserver.service.MessageService;
 import com.boot.bvserver.util.FileConvertUtil;
 import com.boot.bvserver.util.IdWorker;
 import com.boot.bvserver.util.JsoupUtil;
 import com.boot.bvserver.util.Utils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Properties;
 
 @RunWith(SpringRunner.class)
@@ -48,16 +42,19 @@ public class BvserverApplicationTests {
     private FileConvertUtil fileConvertUtil;
 
     @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
+    private JsoupUtil jsoupUtil;
+
+    @Autowired
+    private IdWorker idWorker;
+
+    @Autowired
+    private DemoService demoService;
 
     @Autowired
     private ChatMessageRepository chatMessageRepository;
 
     @Autowired
-    private JsoupUtil jsoupUtil;
-
-    @Autowired
-    private IdWorker idWorker;
+    private ElasticsearchTemplate elasticsearchTemplate;
 
     @BeforeClass
     public static void setSystemProperty() {
