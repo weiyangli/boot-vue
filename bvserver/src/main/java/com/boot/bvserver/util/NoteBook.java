@@ -1,7 +1,5 @@
 package com.boot.bvserver.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class NoteBook {
 
     /**
@@ -33,8 +31,7 @@ public class NoteBook {
     * 页面可以通过提交按钮也可以防止重复提交
     * */
     public static void main(String[] args) throws Exception {
-        System.out.println(Character.isWhitespace("二".charAt(0)));
-        System.out.println(StringUtils.isBlank(" lol loo"));
+        System.out.println(3 | 9);
     }
 
     /*
@@ -46,7 +43,8 @@ public class NoteBook {
     * 5.redis 分布式锁机制
     * 6.关于二叉树、平衡二叉树、红黑树原理学习，
     * 拓展到 hashmap 红黑树原理和数据库索引
-    * 7.http 协议衍射到 tcp和udp等协议
-    *
+    * 7.http 协议衍射到 tcp 和udp 等协议
+    * 8.springAop 机制分析原理搞懂
+    * 9.日志相关
     * */
 }
