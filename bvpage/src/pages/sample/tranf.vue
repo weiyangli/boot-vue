@@ -1,5 +1,7 @@
 <template>
-        <IviewTransfer />
+        <div>
+                aaaaaaaa
+        </div>
 </template>
 
 <script>

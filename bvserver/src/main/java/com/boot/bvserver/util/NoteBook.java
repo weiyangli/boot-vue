@@ -1,10 +1,16 @@
 package com.boot.bvserver.util;
 
+import com.boot.bvserver.bean.User;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -175,10 +181,9 @@ public class NoteBook {
      * 页面可以通过提交按钮也可以防止重复提交
      * */
     public static void main(String[] args) throws Exception {
-        String [] a = "a g f d s g s f d".split(" ");
-        for(int i = 0; i <= a.length; i++) {
-            System.out.println(i);
-        }
+        Stack stack = new Stack();
+        stack.push("张三");
+        stack.push("李四");
     }
 
     // 为了保持票数的一致，票数要静态
@@ -208,18 +213,31 @@ public class NoteBook {
     }
     /*
     * java 中的代理模式学习: java中的代理模式指，为代理的类进行扩展或者增强。可以做到在不修改目标对象的功能前提下,对目标功能扩展。
-    * java 中的代理方式有 3 种 ：Cglib代理， jdk 自带的动态代理和静态代理， spring aop 使用了 Cglib代理。
+    * java 中的代理方式有 3 种 ：Cglib代理， jdk 自带的动态代理和静态代理。 JDK 代理方式被代理类必须实现了接口，
+    * Cglib 代理可以直接给普通类进行代理。
     * */
 
 
     /*
     * springaop: 工作原理：在原来的接口方法上，将将业务进行可插拔的横向拓展，也就是业务增强，用的比较多的例如：给业务接口统一添加访问日志，
     * 可以写一个注解，将访问日志时的一些必填属性设置为参数，然后将切点设置为该注解，所有使用该注解的方法，都会被 springaop 给动态代理，生成一个代理类，在原方法的基础上
-    * 添加上日志相关的业务。 AnnotationAwareAspectJAutoProxyCreator 类是提供了 aop 代理原生类的
+    * 添加上日志相关的业务。 AnnotationAwareAspectJAutoProxyCreator 类是提供了 aop 代理原生类的。
     * */
     public void spingAopLearn() {
 
     }
+
+    /*
+    * springmvc 工作流程: 客户端发出请求，springmvc 通过 dispaterServlet 拦截请求，dispaterServlet类间接的继承了
+    * HttpServlet，dispaterServlet 中方法 doDispatch，通过请求在 handleMappings 中找到对应的处理请求的 handle，也就是咱
+    * 写的控制层类，然后执行我们的业务逻辑，最后如果接口是 @RespnseBody 直接返回处理结果，不然会通过配置的视图解析
+    * 跳转回页面。
+    * */
+
+    /*
+    * servlet3.0 支持不写web.xml，将原来的 servlet, filter, listen 功能都改写成了注解形式，在 web 服务器
+    * 启动时将动态生成对应的 servlet 、filter 、listen。spring2.0 以后的 springmvc 整合的就是 servlet3.0。
+    * */
 }
     /*
     * 学习清单(每学完一个模块写一遍博客总结)

@@ -7,31 +7,28 @@ package com.boot.bvserver.learn;
  */
 public class ThreadLearn {
 
-    private static int num = 1;
+    private static int num = 50;
 
     public static void main(String[] args) throws InterruptedException {
-        ThreadLearn test = new ThreadLearn();
-        new Thread(() -> {
-            while (true) {
+        for (int i = 0; i < 1000; i++) {
+            new Thread(() -> {
+                ThreadLearn test = new ThreadLearn();
                 test.computerd();
-            }
-        }).start();
-        new Thread(() -> {
-            while (true) {
-                test.computerd();
-            }
-        }).start();
+            }).start();
+        }
     }
 
     public void computerd() {
-        synchronized(ThreadLearn.class) {
-            // 模拟多线程下库存扣减
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        // 模拟多线程下库存扣减
+        try {
+            if (num == 0) {
+                System.out.println("该商品已售罄。");
+            } else {
+                Thread.sleep(2000);
+                System.out.println("恭喜你抢到了第" + num-- + "商品!");
             }
-            System.out.println("恭喜你抢到了第" + num++ + "商品!");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

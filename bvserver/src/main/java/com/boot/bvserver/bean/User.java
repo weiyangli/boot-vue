@@ -7,7 +7,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -21,6 +23,7 @@ public class User implements UserDetails {
     private boolean enabled;
     private String picture;
     private List<Role> roles;
+    private Integer age;
 
     // 用户权限
     @Override
@@ -68,5 +71,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-
 }

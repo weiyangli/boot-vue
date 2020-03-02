@@ -9,6 +9,9 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,8 +35,7 @@ public class JsoupUtil {
     }
 
     public static void main(String[] args) throws  Exception{
-        Document document= Jsoup.connect("https://lol.qq.com/act/a20200116Lunarnewyear/index.html").get();
-        System.out.println(document.outerHtml());
+
     }
 
     /**

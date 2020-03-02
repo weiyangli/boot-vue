@@ -1,0 +1,34 @@
+java 中八个基本类型你都了解吗
+    java 中有8个基本类型，大家开发中应该都多多少少都用过，但是它们的一些特性和关系，可能开发时没有专门的学习过，话不多说咱来扒一扒。
+    咱先从基本类型说起，java 中有 8 个基本了类型: byte, short, int, long, char, float, double, boolean,它们的包装类型分别是：
+    Byte, Short, Integer, Long, Character, Float, Double, Boolean,它们的包装类除了 bool 外都继承了抽象类 java.lang 包下的 Number 类，
+    Number 类中定义了几个类型转换的方法，如下
+
+    它们的包装类都重写这几个方法，同时也在此基础上进行了拓展，提供了更多的类型转换的方法供我们使用，有兴趣的朋友可以去看看源码。
+    下面这张图是他们的一些基本信息。
+
+    根据他们的取值，又可以分为以下几类：
+    整型：byte, short, int, long
+    字符型：char
+    浮点型：float, double
+    布尔型：boolean
+
+    byte
+    byte 属于 java 中的整形，取值范围  -2^7 - 2^7-1 也就是 -128 到 127, byte 类型在开发中一般用于存储字节数据，比如
+    文件流操作时，会使用 byte 来将文件转换为字节的形式处理。byte 的包装类时 Byte,该类集成了抽象类 Number 类。
+
+    short
+
+    int
+
+    float
+
+    long
+
+    double
+
+    boolean
+
+    char
+
+    BigDecimal

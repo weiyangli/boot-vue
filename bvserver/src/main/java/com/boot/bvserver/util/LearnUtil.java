@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,8 @@ public class LearnUtil {
 
     public static Map<Integer, String> createdPool() {
         Map<Integer, String> pool = new HashMap<>();
+        // 打乱奖品池
+        Collections.shuffle(prizes);
         int num = 1;
         // 根据奖品的中奖概率创建奖品池
         for (int i = 0; i < prizes.size(); i++) {

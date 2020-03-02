@@ -5,7 +5,6 @@ import com.boot.bvserver.bean.ChatGroup;
 import com.boot.bvserver.bean.Message;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.service.MessageService;
-import com.boot.bvserver.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

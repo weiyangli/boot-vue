@@ -8,7 +8,7 @@ export default new Router({
         {
             path: '/',
             component: () => import('./main.vue'),
-            // redirect: '/echarts',
+            redirect: '/solt/parent',
         },
         {
             path: '/tranf',
@@ -23,6 +23,11 @@ export default new Router({
         {
             path: '/pdf',
             component: () => import('./pdf.vue'),
+            // redirect: '/echarts',
+        },
+        {
+            path: '/solt/parent',
+            component: () => import('./solt-parent.vue'),
             // redirect: '/echarts',
         },
     ],
