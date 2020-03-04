@@ -1,0 +1,19 @@
+servlet 发展史
+
+参考文档：https://www.cnblogs.com/gaoxiangde/p/4339571.html，
+          https://www.cnblogs.com/zhuchaoli/p/10415202.html，
+          https://www.cnblogs.com/winterfells/p/8476759.html
+梳理问题：
+    1.servlet 是 j2ee 十三种规范中的一种。
+    2. 主要解决客户端与服务数据交互
+    3.servlet 八大内置对象
+    4. tomcat 是专门解析运行 servlet 的 web 容器
+    5. servlet1.0 - servlet 3.0
+    6. jsp 和 servlet 的关系
+    7. HttpServlet =》 GenericServlet =》 Servlet
+    8. springmvc 在servlet的基础上开发的
+
+注意：
+    Servlet有两个缺点：1）写在Servlet中的所有HTML标签必须包含java字符串似的处理HTTP响应报文工作复杂；
+    2）所有的文本都是硬
+    编码，即是出现了一点点的变化也需要重现编译。JSP解决了上述的问题并与Servlet同时使用。

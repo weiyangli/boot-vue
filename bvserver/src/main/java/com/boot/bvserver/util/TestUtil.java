@@ -1,6 +1,5 @@
 package com.boot.bvserver.util;
 
-import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -42,11 +41,11 @@ public class TestUtil{
      * 返回自定义类型的结果集
      *
      * @param name
-     * @param clazz
+     * @param data
      * @param <T>
      * @return
      */
-    public static <T> List<T> list(String name, Class<T> clazz) {
+    public static <T> List<T> list(String name, T data) {
         List<T> list = new ArrayList<>();
         return list;
     }

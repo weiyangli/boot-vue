@@ -26,7 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // 表示客户端订阅地址的前缀信息，也就是客户端接收服务端消息的地址的前缀信息
-        //registry.enableSimpleBroker("/topic");
+        // registry.enableSimpleBroker("/topic");
         // 指服务端接收地址的前缀，意思就是说客户端给服务端发消息的地址的前缀
         registry.setApplicationDestinationPrefixes("/ws");
     }

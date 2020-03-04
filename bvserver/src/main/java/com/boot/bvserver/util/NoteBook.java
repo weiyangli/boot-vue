@@ -82,7 +82,24 @@ public class NoteBook {
          * java math 类型提供了 BigDecimal 类型，因为 java 中的最高精度类型是 double, 但是
          * 在实际的使用中有可能会超出这个精度，所以又提供了该类型。
          * */
-        BigDecimal bigDecimalA = new BigDecimal("1234567890123456789012345678901");
+        // 不能直接使用 new BigDecimal(double) 构造函数，丢失精度
+        BigDecimal b1 = new BigDecimal(2.4);
+        // 正确用法转 String
+        BigDecimal b2 = new BigDecimal("5.5");
+        System.out.println("b1===>" + b1);
+        System.out.println("b1===>" + b2);
+
+        BigDecimal b3 = new BigDecimal("3.9");
+        // 加
+        System.out.println(b2.add(b3));
+        // 减
+        System.out.println(b3.subtract(b2));
+        // 乘
+        System.out.println(b3.multiply(b2));
+        // 除 divide(被除数， 保留小数位数， 其余部分取整方式)
+        System.out.println(b2.divide(b3, 2, BigDecimal.ROUND_HALF_UP));
+        // 比较大小
+        System.out.println(b2.compareTo(b3));
 
     }
 
@@ -181,9 +198,6 @@ public class NoteBook {
      * 页面可以通过提交按钮也可以防止重复提交
      * */
     public static void main(String[] args) throws Exception {
-        Stack stack = new Stack();
-        stack.push("张三");
-        stack.push("李四");
     }
 
     // 为了保持票数的一致，票数要静态
