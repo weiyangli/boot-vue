@@ -2,7 +2,8 @@ servlet 发展史
 
 参考文档：https://www.cnblogs.com/gaoxiangde/p/4339571.html，
           https://www.cnblogs.com/zhuchaoli/p/10415202.html，
-          https://www.cnblogs.com/winterfells/p/8476759.html
+          https://www.cnblogs.com/winterfells/p/8476759.html,
+                  https://www.ibm.com/developerworks/cn/java/j-lo-servlet/
 梳理问题：
     1.servlet 是 j2ee 十三种规范中的一种。
     2. 主要解决客户端与服务数据交互
@@ -17,3 +18,8 @@ servlet 发展史
     Servlet有两个缺点：1）写在Servlet中的所有HTML标签必须包含java字符串似的处理HTTP响应报文工作复杂；
     2）所有的文本都是硬
     编码，即是出现了一点点的变化也需要重现编译。JSP解决了上述的问题并与Servlet同时使用。
+
+
+正文：
+    servlet 在 java web 开发中占据了很大的地位，我们经常使用的 spring mvc 、struts2 等控制层
+    架构都是在 servlet 基础上拓展出来的，
