@@ -1,0 +1,2 @@
+SpiServiceIBakImpl = com.dubbo.demo.provider.service.impl.SpiServiceIBakImpl
+SpiServiceImpl = com.dubbo.demo.provider.service.impl.SpiServiceImpl
