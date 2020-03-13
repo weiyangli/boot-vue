@@ -17,3 +17,12 @@ servlet 发展史
     Servlet有两个缺点：1）写在Servlet中的所有HTML标签必须包含java字符串似的处理HTTP响应报文工作复杂；
     2）所有的文本都是硬
     编码，即是出现了一点点的变化也需要重现编译。JSP解决了上述的问题并与Servlet同时使用。
+
+    web 服务器：
+        weblogic： oracle公司，大型 javaEE 服务器，支持所有的 javaee 的开发规范。 收费
+        webSphere: IBM公司。大型的 javaEE 的服务器，支持所有 javaEE 规范，收费的。
+        JBOSS: JBOSS 公司开发， 大型的 javaEE 的服务器，支持所有 javaEE 规范，收费的。
+        tomcat: Apache 基金会，中小型的 javaEE服务器，仅仅支持少量的 JAVAee 规范servlet/jsp。开源免费。
+
+
+        浏览器只能解析 html、js、css三种静态资源，类似 servlet， jsp 这种动态资源需要编译成静态的资源，浏览器才能识别展示。
