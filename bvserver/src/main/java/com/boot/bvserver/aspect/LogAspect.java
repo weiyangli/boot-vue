@@ -23,13 +23,17 @@ public class LogAspect {
     public Object saveLog(ProceedingJoinPoint joinPoint) {
         Object out = null;
         try {
+            System.out.println("方法执行前");
+            out = joinPoint.proceed();
             MethodSignature signature = (MethodSignature)joinPoint.getSignature();
             LogInfo logInfo = signature.getMethod().getAnnotation(LogInfo.class);
             // 处理日志信息
             logInfo.value();
+            System.out.println("接收到注解中的值!" + logInfo.value());
             // 保存到日志表
         } catch (Throwable throwable) {
         }
         return out;
     }
+
 }
