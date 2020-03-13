@@ -1,9 +1,8 @@
-
 server:
-  port: 9001
+  port: 80
 spring:
   application:
-    name: costorm
+    name: zuul
   cloud:
     nacos:
       discovery:
@@ -15,3 +14,7 @@ nacos:
 dubbo:
   registry:
     address: nacos://${nacos.service-address}:${nacos.port}
+​zuul:
+ ​routes:
+   provider: /provider/**
+   costorm: /costorm/**

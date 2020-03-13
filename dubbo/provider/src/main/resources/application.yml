@@ -3,7 +3,6 @@ server:
 spring:
   application:
     name: provider
-  #½«·şÎñ±©Â¶¸ø×¢²áÖĞĞÄ
   cloud:
     nacos:
       discovery:
@@ -13,10 +12,9 @@ nacos:
   service-address: 127.0.0.1
   port: 8848
 dubbo:
-  #×¢²áÖĞĞÄµÄĞ­ÒéºÍµØÖ·
   registry:
     address: nacos://${nacos.service-address}:${nacos.port}
-  #ÏµÍ³ÄÚ rpc µ÷ÓÃµÄÍ¨ĞÅ¹æÔò£¬dubbo ÖĞÌá¹©ÁËºÜ¶àÖÖÍ¨ĞÅ·½Ê½£¬ÕâÀïÊ¹ÓÃ dubbo
+  # ä½¿ç”¨ dubbo çš„ rpc è°ƒç”¨æ–¹å¼ï¼Œæš´éœ²æä¾›è€…æœåŠ¡
   protocol:
     name: dubbo
     port: 20881

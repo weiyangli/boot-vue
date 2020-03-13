@@ -1,5 +1,6 @@
 package com.boot.bvserver.controller;
 
+import com.boot.bvserver.annotation.LogInfo;
 import com.boot.bvserver.bean.Demo;
 import com.boot.bvserver.bean.Result;
 import com.boot.bvserver.service.DemoService;
@@ -29,6 +30,7 @@ public class DemoController {
 
     @GetMapping("/get/value")
     @ApiOperation("获取数据")
+    @LogInfo(value = "测试方法")
     @ResponseBody
     public String hello() throws Exception{
         System.out.println(Thread.currentThread().getId());
