@@ -18,3 +18,7 @@ dubbo:
  ​routes:
    provider: /provider/**
    costorm: /costorm/**
+# Zuul 内部使用 Ribbon 调用远程 URL
+ ribbon:
+   eager-load:
+     enabled: false
