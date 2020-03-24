@@ -2,6 +2,7 @@ package com.boot.bvserver;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.boot.bvserver.bean.Dpg;
 import com.boot.bvserver.bean.EsDemo;
 import com.boot.bvserver.bean.Message;
 import com.boot.bvserver.bean.MessageType;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
@@ -30,6 +32,7 @@ import java.util.Properties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Import(Dpg.class)
 public class BvserverApplicationTests {
 
     @Autowired
@@ -55,6 +58,9 @@ public class BvserverApplicationTests {
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
+
+    @Autowired
+    private Dpg dpg;
 
     @BeforeClass
     public static void setSystemProperty() {
@@ -90,6 +96,7 @@ public class BvserverApplicationTests {
 
     @Test
     public void word2Pdf2() throws Exception{
+        System.out.println(dpg.getMessage());
     }
 
 }
