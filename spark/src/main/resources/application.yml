@@ -14,6 +14,7 @@ stockJob:
   cron: 0/5 * * * * ?
   shardingTotalCount: 4
   shardingItemParameters: 0=0,1=1,2=0,3=1
+  namespace: elastic-job-lite-springboot
 
 spring:
   datasource:
@@ -29,4 +30,14 @@ spring:
     # mybatis 自动将下划线字段匹配为实体的驼峰规则(查询时)
     configuration:
       map-underscore-to-camel-case: true
+server:
+  port: 8571
+
+log4j:
+  logger:
+    freemarker:
+      cache:  ERROR
+      beans: ERROR
+
+
 

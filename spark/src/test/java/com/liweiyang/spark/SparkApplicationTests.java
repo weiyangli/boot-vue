@@ -1,13 +1,30 @@
 package com.liweiyang.spark;
 
+import com.alibaba.fastjson.JSONObject;
+import com.liweiyang.spark.bean.Demo;
+import com.liweiyang.spark.bean.User;
+import com.liweiyang.spark.controller.DemoControler;
+import com.liweiyang.spark.util.FreemarkerUtil;
 import com.liweiyang.spark.zk.BaseLockHandler;
 import com.liweiyang.spark.zk.ShardReentrantLockComponent;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.Version;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.data.Stat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,6 +38,9 @@ class SparkApplicationTests {
 
     @Autowired
     private ShardReentrantLockComponent lockComponent;
+
+    @Autowired
+    private FreemarkerUtil freemarkerUtil;
 
 
     /**
@@ -124,6 +144,25 @@ class SparkApplicationTests {
         }
         //使该方法阻塞住，不然看不到效果
         countDownLatch.await();
+    }
+
+    @Test
+    public void genTemp() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("enabled", "true");
+        jsonObject.put("orderNum", "No458415151");
+        jsonObject.put("phone", "15510557605");
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            User user = User.builder().id(i + 1L).nickname("赵三").username("tony").build();
+            users.add(user);
+        }
+        Demo demo = Demo.builder().id(4554544L).name("李明").otherInfo(jsonObject).userList(users).build();
+        Demo demo2 = Demo.builder().id(89757L).name("找你你").otherInfo(jsonObject).userList(users).build();
+        List<Demo> demoList = new ArrayList<>();
+        demoList.add(demo);
+        demoList.add(demo2);
+        freemarkerUtil.generateTemplate("index.ftl", "index.html", demoList);
     }
 
 

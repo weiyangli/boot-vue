@@ -1,11 +1,8 @@
 package com.liweiyang.spark.zk;
 
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.TimeUnit;
 
-@Component
-public abstract  class BaseLockHandler {
+public abstract class BaseLockHandler {
     /**获得锁的默认超时时间，默认为 200ms**/
     private static final int DEFAULT_TIME_OUT = 200;
     /**加锁的资源路径**/

@@ -3,10 +3,12 @@ package com.liweiyang.spark.config;
 import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
+import com.liweiyang.spark.zk.ZookeeperProperties;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
 public class ZookeeperConfig {
 
     /**定时任务命名空间**/
-    private  String JOB_NAMESPACE = "elastic-job-boot-java";
+    @Value("${stockJob.namespace}")
+    private  String JOB_NAMESPACE;
 
     /**
      * 获取 CuratorFramework
@@ -49,6 +52,5 @@ public class ZookeeperConfig {
         //创建注册中心
         CoordinatorRegistryCenter zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfiguration);
         return zookeeperRegistryCenter;
-
     }
 }

@@ -45,11 +45,11 @@
         </dependency>
 
         <!--curator-test 用来模拟 zookeeper 环境-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-test</artifactId>
             <version>${zk.version}</version>
-        </dependency>-->
+        </dependency>
 
 
         <!-- https://mvnrepository.com/artifact/com.dangdang/elastic-job-lite-spring -->
@@ -62,6 +62,11 @@
             <groupId>com.dangdang</groupId>
             <artifactId>elastic-job-lite-core</artifactId>
             <version>${elastic-job.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
         <!-- mybatis -->
@@ -98,6 +103,11 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.62</version>
         </dependency>
     </dependencies>
 

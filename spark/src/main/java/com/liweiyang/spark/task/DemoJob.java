@@ -4,7 +4,7 @@ import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 import org.springframework.stereotype.Component;
 
-@Component("lwyJob")
+@Component
 public class DemoJob implements SimpleJob {
 
     @Override
