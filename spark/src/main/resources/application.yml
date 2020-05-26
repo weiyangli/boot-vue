@@ -1,13 +1,13 @@
 zookeeper:
-  #Ã¿´ÎÖØÊÔÊ±¼ä¼ä¸ô£¬µ¥Î»ºÁÃë
+  #æ¯æ¬¡é‡è¯•æ—¶é—´é—´éš”ï¼Œå•ä½æ¯«ç§’
   baseSleepTimeMs: 1000
-  #ÖØÊÔ´ÎÊı
+  #é‡è¯•æ¬¡æ•°
   maxRetries: 3
-  #zookeeper·şÎñÁ¬½ÓidÓë¶Ë¿Ú£¬¼¯Èº¶à¸öÓÃ¶ººÅ¸ô¿ª
+  #zookeeperæœåŠ¡è¿æ¥idä¸ç«¯å£ï¼Œé›†ç¾¤å¤šä¸ªç”¨é€—å·éš”å¼€
   connectString: 127.0.0.1:2181
-  #»á»°³¬Ê±Ê±¼ä£¬µ¥Î»ºÁÃë
+  #ä¼šè¯è¶…æ—¶æ—¶é—´ï¼Œå•ä½æ¯«ç§’
   sessionTimeoutMs: 5000
-  #Á¬½Ó´´½¨³¬Ê±Ê±¼ä£¬µ¥Î»ºÁÃë
+  #è¿æ¥åˆ›å»ºè¶…æ—¶æ—¶é—´ï¼Œå•ä½æ¯«ç§’
   connection-timeout-ms: 5000
 
 stockJob:
@@ -18,7 +18,7 @@ stockJob:
 
 spring:
   datasource:
-    # Ê¹ÓÃ druid Á¬½Ó³Ø
+    # ä½¿ç”¨ druid è¿æ¥æ± 
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: root
@@ -27,7 +27,7 @@ spring:
   mybatis:
     mapper-locations: classpath:mybatis/**/*Mapper.xml
     type-aliases-package: com.liweiyang.spark.bean
-    # mybatis ×Ô¶¯½«ÏÂ»®Ïß×Ö¶ÎÆ¥ÅäÎªÊµÌåµÄÍÕ·å¹æÔò(²éÑ¯Ê±)
+    # mybatis è‡ªåŠ¨å°†ä¸‹åˆ’çº¿å­—æ®µåŒ¹é…ä¸ºå®ä½“çš„é©¼å³°è§„åˆ™(æŸ¥è¯¢æ—¶)
     configuration:
       map-underscore-to-camel-case: true
 server:
