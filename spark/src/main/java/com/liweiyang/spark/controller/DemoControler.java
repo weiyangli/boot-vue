@@ -1,6 +1,7 @@
 package com.liweiyang.spark.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.liweiyang.spark.aspect.annotation.AutoLog;
 import com.liweiyang.spark.bean.Demo;
 import com.liweiyang.spark.bean.User;
 import freemarker.template.Configuration;
@@ -46,8 +47,9 @@ public class DemoControler {
         return "index";
     }
 
-    @GetMapping("/demo/find")
+    @RequestMapping("/demo/find")
     @ResponseBody
+    @AutoLog(value = "查询 demo 信息", operateType = 2)
     public List<Demo> findDemos() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("enabled", "true");
@@ -63,6 +65,7 @@ public class DemoControler {
         List<Demo> demoList = new ArrayList<>();
         demoList.add(demo);
         demoList.add(demo2);
+        int a =  1 / 0;
         return demoList;
     }
 }

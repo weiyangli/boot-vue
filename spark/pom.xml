@@ -17,12 +17,26 @@
         <java.version>1.8</java.version>
         <zk.version>4.2.0</zk.version>
         <elastic-job.version>2.1.5</elastic-job.version>
+        <commons.version>2.6</commons.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons.version}</version>
         </dependency>
         <!--curator-recipes-->
         <dependency>
