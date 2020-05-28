@@ -41,7 +41,7 @@ public class DemoControler {
         //定义输出流，注意必须指定编码
         Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(path + "/" + "active.html")),"UTF-8"));
         //生成模版
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(1);
         map.put("name", "张三");
         template.process(map, writer);
         return "index";
@@ -65,7 +65,6 @@ public class DemoControler {
         List<Demo> demoList = new ArrayList<>();
         demoList.add(demo);
         demoList.add(demo2);
-        int a =  1 / 0;
         return demoList;
     }
 }
