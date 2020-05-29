@@ -22,14 +22,18 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.IntStream;
 
-@SpringBootTest
+//@SpringBootTest
 class SparkApplicationTests {
 
 
@@ -107,7 +111,7 @@ class SparkApplicationTests {
         //使用 CountDownLatch 实现线程的协调
         CountDownLatch countDownLatch = new CountDownLatch(100);
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 10000; i++) {
             final int index = i;
             //提交线程
             executorService.submit(() -> {
@@ -163,6 +167,58 @@ class SparkApplicationTests {
         demoList.add(demo);
         demoList.add(demo2);
         freemarkerUtil.generateTemplate("index.ftl", "index.html", demoList);
+    }
+
+    private static List<Integer> list0 = new ArrayList<>();
+    private static List<Integer> list1 = new ArrayList<>();
+    private static List<Integer> list2 = new ArrayList<>();
+    private static List<Integer> list3 = new ArrayList<>();
+    private static int num = 12;
+    private Lock lock = new ReentrantLock(true);
+
+
+    /**
+     * parallelStream 和 Stream 都可以用于流式计算，区别在于前者是并行处理，
+     * 如果参与计算的值是单例的计算结果会出错，避免问题可以加锁，或者直接使用 Stream
+     */
+    @Test
+    public void java8Test() {
+       /* List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        numbers.parallelStream().forEach(x -> {
+            lock.lock();
+            try {
+                num += x;
+            } finally {
+                lock.unlock();
+            }
+        });
+        System.out.println(num);*/
+        Long time0 = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+            list0.add(i + 1);
+        }
+        Long time1 = System.currentTimeMillis();
+        System.out.println("普通 for 循环" + (time1 - time0) + "ms");
+        IntStream.range(0, 1000000).forEach(list1::add);
+        Long time2 = System.currentTimeMillis();
+        System.out.println("stream 循环" + (time2 - time1) + "ms");
+        IntStream.range(0, 1000000).parallel().forEach(list2::add);
+        Long time3 = System.currentTimeMillis();
+        System.out.println("parallel 并行循环" + (time3 - time2) + "ms");
+        IntStream.range(0, 1000000).parallel().forEach(x -> {
+            lock.lock();
+            try {
+                list3.add(x);
+            } finally {
+                lock.unlock();
+            }
+        });
+        System.out.println("parallel 加锁并行循环" + (System.currentTimeMillis() - time3) + "ms");
+
+        System.out.println("普通执行的大小：" + list0.size());
+        System.out.println("串行执行的大小：" + list1.size());
+        System.out.println("并行执行的大小：" + list2.size());
+        System.out.println("加锁并行执行的大小：" + list3.size());
     }
 
 
