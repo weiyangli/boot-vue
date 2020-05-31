@@ -407,9 +407,9 @@ public class RedisUtil {
      * @param end   结束 0 到 -1代表所有值
      * @return
      */
-    public List<Object> lGet(String key, long start, long end) {
+    public <T>List<T> lGet(String key, Class<T> clazz, long start, long end) {
         try {
-            return redisTemplate.opsForList().range(key, start, end);
+            return (List<T>)redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -452,7 +452,6 @@ public class RedisUtil {
      *
      * @param key   键
      * @param value 值
-     * @param time  时间(秒)
      * @return
      */
     public boolean lSet(String key, Object value) {
@@ -476,8 +475,9 @@ public class RedisUtil {
     public boolean lSet(String key, Object value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
-            if (time > 0)
+            if (time > 0) {
                 expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -489,11 +489,27 @@ public class RedisUtil {
      * 将list放入缓存
      *
      * @param key   键
-     * @param value 值
-     * @param time  时间(秒)
+     * @param values 值
      * @return
      */
-    public boolean lSet(String key, List<Object> value) {
+    public <T>boolean lSetAll(String key, List<T> values, Class<T> t) {
+        try {
+            values.forEach(x -> redisTemplate.opsForList().rightPush(key, x));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 将list放入缓存(将整个 List 放入到一个下标中)
+     *
+     * @param key   键
+     * @param value 值
+     * @return
+     */
+    public <T>boolean lSet(String key, List<T> value, Class<T> t) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;

@@ -1,18 +1,13 @@
 package com.boot.bvserver;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.boot.bvserver.bean.EsDemo;
-import com.boot.bvserver.bean.Message;
-import com.boot.bvserver.bean.MessageType;
-import com.boot.bvserver.bean.Question;
+import com.boot.bvserver.bean.*;
 import com.boot.bvserver.repository.ChatMessageRepository;
 import com.boot.bvserver.service.DemoService;
 import com.boot.bvserver.service.MessageService;
-import com.boot.bvserver.util.FileConvertUtil;
-import com.boot.bvserver.util.IdWorker;
-import com.boot.bvserver.util.JsoupUtil;
-import com.boot.bvserver.util.Utils;
+import com.boot.bvserver.util.*;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,9 +18,12 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 @RunWith(SpringRunner.class)
@@ -55,6 +53,12 @@ public class BvserverApplicationTests {
 
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @BeforeClass
     public static void setSystemProperty() {
@@ -90,6 +94,15 @@ public class BvserverApplicationTests {
 
     @Test
     public void word2Pdf2() throws Exception{
+        List<Demo> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Demo demo = new Demo();
+            demo.setId(111111111111L);
+            demo.setName("lwt" + i);
+            result.add(demo);
+        }
+//        redisUtil.lSetAll("demo:admin5", result, Demo.class);
+        List<Demo> result2 = redisUtil.lGet("demo:admin6", Demo.class,0, -1);
+        result2.forEach((x) -> System.out.println(x.getName()));
     }
-
 }
