@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+    <script src="./jquery.min.js"></script>
+</head>
+<body>
+<button id="bid">查询</button>
+<script type="text/javascript">
+    $('#bid').click(function(){
+        $.ajax({
+            url:'/demo/find',//地址
+            dataType:'json',//数据类型
+            type:'GET',//类型
+            timeout:2000,//超时
+            //请求成功
+            success:function(data,status){
+                alert(JSON.stringify(data));
+            },
+            //失败/超时
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+                if (XMLHttpRequest.status == 500) {
+                    alert(`500: 发生异常，${XMLHttpRequest.responseJSON.errorMessage}\n\n详细错误信息请查看控制台输出 (Chrome 按下快捷键 F12)`);
+                }
+                console.log(XMLHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
+                //alert(errorThrown);
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

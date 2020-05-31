@@ -1,13 +1,9 @@
 package com.boot.bvserver;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-//@MapperScan("com.**.dao")  因为内部需要 spring 构建的类都用注解注入了，该注解就不用加了
 @SpringBootApplication
-@EnableAspectJAutoProxy
 public class BvserverApplication {
 
     public static void main(String[] args) {

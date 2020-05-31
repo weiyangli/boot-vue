@@ -1,0 +1,43 @@
+zookeeper:
+  #每次重试时间间隔，单位毫秒
+  baseSleepTimeMs: 1000
+  #重试次数
+  maxRetries: 3
+  #zookeeper服务连接id与端口，集群多个用逗号隔开
+  connectString: 127.0.0.1:2181
+  #会话超时时间，单位毫秒
+  sessionTimeoutMs: 5000
+  #连接创建超时时间，单位毫秒
+  connection-timeout-ms: 5000
+
+stockJob:
+  cron: 0/5 * * * * ?
+  shardingTotalCount: 4
+  shardingItemParameters: 0=0,1=1,2=0,3=1
+  namespace: elastic-job-lite-springboot
+
+spring:
+  datasource:
+    # 使用 druid 连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driverClassName: com.mysql.jdbc.Driver
+  mybatis:
+    mapper-locations: classpath:mybatis/**/*Mapper.xml
+    type-aliases-package: com.liweiyang.spark.bean
+    # mybatis 自动将下划线字段匹配为实体的驼峰规则(查询时)
+    configuration:
+      map-underscore-to-camel-case: true
+server:
+  port: 8571
+
+log4j:
+  logger:
+    freemarker:
+      cache:  ERROR
+      beans: ERROR
+
+
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>访问异常</title>
+    <script src="./jquery.min.js"></script>
+</head>
+<body>
+    <div style="width: 1000px; margin: 0 auto; text-align: center">
+        <h3 id="title"></h3>
+        <div id="errorMessage" style="word-break: break-all;"></div>
+    </div>
+<script>
+    $(function(){
+        var params = getQueryString();
+        console.log(params);
+        if (params.title) {
+            $('#title').text(`标题：${params.title}`);
+        }
+        if (params.errorMessage) {
+            $('#errorMessage').text(`错误信息：${params.errorMessage}`);
+        }
+    });
+    function getQueryString() {
+        var qs = location.search.substr(1), // 获取url中"?"符后的字串
+            args = {}, // 保存参数数据的对象
+            items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+            item = null,
+            len = items.length;
+
+        for(var i = 0; i < len; i++) {
+            item = items[i].split("=");
+            var name = decodeURIComponent(item[0]),
+                value = decodeURIComponent(item[1]);
+            if(name) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+</script>
+</body>
+</html>

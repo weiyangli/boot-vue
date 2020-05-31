@@ -1,9 +1,9 @@
 package com.boot.bvserver;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.boot.bvserver.bean.*;
+import com.boot.bvserver.bean.Dpg;
+import com.boot.bvserver.bean.Message;
+import com.boot.bvserver.bean.MessageType;
 import com.boot.bvserver.repository.ChatMessageRepository;
 import com.boot.bvserver.service.DemoService;
 import com.boot.bvserver.service.MessageService;
@@ -14,9 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,6 +27,7 @@ import java.util.Properties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Import(Dpg.class)
 public class BvserverApplicationTests {
 
     @Autowired
@@ -59,6 +59,7 @@ public class BvserverApplicationTests {
 
     @Autowired
     private RedisUtil redisUtil;
+    private Dpg dpg;
 
     @BeforeClass
     public static void setSystemProperty() {
@@ -104,5 +105,6 @@ public class BvserverApplicationTests {
 //        redisUtil.lSetAll("demo:admin5", result, Demo.class);
         List<Demo> result2 = redisUtil.lGet("demo:admin6", Demo.class,0, -1);
         result2.forEach((x) -> System.out.println(x.getName()));
+        System.out.println(dpg.getMessage());
     }
 }
