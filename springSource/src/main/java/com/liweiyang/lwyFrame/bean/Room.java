@@ -8,8 +8,8 @@ import lombok.Data;
 public class Room {
     private String name;
     private String coverImg;
-    private Long startTime;
-    private Long endTime;
+    private long startTime;
+    private long endTime;
     private String anchorName;
     private String anchorWechat;
     private String shareImg;

@@ -18,6 +18,14 @@ public class FrameTest {
     @Autowired
     private WeChatLiveUtil weChatLiveUtil;
 
+    private static String appIdMine = "wx0ddaf0c9107b7561";
+
+    private static final String AppSecretMine = "6e47f8b56a7c6abfabb9b5105bd7ff3e";
+
+    private static String appIdOther = "wxca67c7e0126a94d8";
+
+    private static final String AppSecretOther = "ff2a083202c024a5dd00f6ae4e3b9c04";
+
     @Test
     public void springContextTest() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("config/application.xml");
@@ -27,7 +35,8 @@ public class FrameTest {
 
     @Test
     public void getAccessToken() {
-        String code =  weChatLiveUtil.getRestPost();
-        System.out.println(code);
+        String newCode = weChatLiveUtil.getAccessToken(appIdOther, AppSecretOther);
+//        String code =  weChatLiveUtil.getRestPost();
+        System.out.println(newCode);
     }
 }

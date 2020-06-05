@@ -12,7 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 微信直播 API 接口工具类
@@ -47,15 +50,29 @@ public class WeChatLiveUtil {
     }
 
     public String getRestPost() {
-        String code = getAccessToken("wx7c56bf0f29b168b8", "1eb5bf9d4ed4134b6b5e523c0f96553a");
-        Room room = Room.builder().name("测试直播间").coverImg("xxxxxx").startTime(System.currentTimeMillis())
-                .endTime(DateUtils.addDays(new Date(), 7).getTime())
+        String code = getAccessToken("wxca67c7e0126a94d8", "ff2a083202c024a5dd00f6ae4e3b9c04");
+        java.util.Date startTime = DateUtils.addHours(new Date(), 5);
+        Room room = Room.builder().name("测试直播间").coverImg("xxxxxx").startTime(startTime.getTime())
+                .endTime(DateUtils.addHours(startTime, 2).getTime())
                 .anchorName("test1").anchorWechat("test1").shareImg(null)
                 .build();
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        System.out.println(JSON.toJSONString(room));
         HttpEntity<String> entity = new HttpEntity<String>(JSON.toJSONString(room), header);
         String result = restTemplate.postForObject(String.format(Urls.API_GET_ROOM, code),  entity, String.class);
         return result;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DateUtils.addHours(new Date(), 2).getTime() / 1000);
+        System.out.println(DateUtils.addHours(new Date(), 5).getTime() / 1000);
+        String a = "111";
+        String strs = "1111,43534g,trtyhrt";
+        if (Optional.ofNullable(strs).isPresent()) {
+            String c = Arrays.stream(strs.split(",")).filter(x -> !x.equals(a)).collect(Collectors.joining(","));
+            System.out.println(c);
+        }
+
     }
 }
