@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class Java8Learn {
+public class Java8Learn extends java8Test{
     /**
      * 复合 Lambda 表达式的有用方法
      */

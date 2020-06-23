@@ -2,6 +2,8 @@ package com.liweiyang.lwyFrame.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.liweiyang.lwyFrame.bean.Demo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,9 +20,13 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.groupingBy;
+
 
 public class java8Test {
+
+    private static final Logger broadcastAPILog = LoggerFactory.getLogger(java8Test.class);
 
     static int aa = 222;
 
@@ -60,7 +66,7 @@ public class java8Test {
 
         String twoLines =
                 processFile((BufferedReader br) -> br.readLine() + br.readLine());
-        Map<Integer, List<Demo>> maps =result.stream().collect(Collectors.groupingBy(Demo::getAge));
+        Map<Integer, List<Demo>> maps =result.stream().collect(groupingBy(Demo::getAge));
         /**
          * lambda 表达式闭包范围类不能修改局部变量的值，局部变量值不能被其他线程共享，如果修改了涉及
          * 多线程变量值不一致的问题。
@@ -111,7 +117,7 @@ public class java8Test {
      * @return 返回分组后的 map
      */
     public static <K, T> Map<K, List<T>> groupAndLimitMapListValueSize(List<T> list, int size, Function<? super T, ? extends K> classifier) {
-        Map<K, List<T>> map = list.stream().collect(Collectors.groupingBy(classifier));
+        Map<K, List<T>> map = list.stream().collect(groupingBy(classifier));
 
         map.forEach((key, valueList) -> {
             if (valueList.size() > size) {
@@ -121,10 +127,17 @@ public class java8Test {
         return map;
     }
 
-    public static void main(String[] args) {
-        Stream.iterate(0, n -> n + 2)
-                .limit(10)
-                .forEach(System.out::println);
+    public static void Comparatormain(String[] args) {
+        List<String> strs = Arrays.asList("lol", "dsaad", "sdfslol", "dsddsaad");
+        Map<String, List<String>> strMap =  strs.stream().collect(Collectors.groupingBy(x -> {
+            if (x.indexOf("lol") > -1) {
+                return "yx";
+            } else if (x.indexOf("dsaad") > -1) {
+                return "fsd";
+            }
+            return "default";
+        }));
+        System.out.println(JSONObject.toJSONString(strMap));
     }
 
 }

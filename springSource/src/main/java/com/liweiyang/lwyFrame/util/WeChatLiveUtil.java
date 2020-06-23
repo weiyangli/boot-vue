@@ -67,12 +67,5 @@ public class WeChatLiveUtil {
     public static void main(String[] args) {
         System.out.println(DateUtils.addHours(new Date(), 2).getTime() / 1000);
         System.out.println(DateUtils.addHours(new Date(), 5).getTime() / 1000);
-        String a = "111";
-        String strs = "1111,43534g,trtyhrt";
-        if (Optional.ofNullable(strs).isPresent()) {
-            String c = Arrays.stream(strs.split(",")).filter(x -> !x.equals(a)).collect(Collectors.joining(","));
-            System.out.println(c);
-        }
-
     }
 }
