@@ -1,5 +1,8 @@
 package com.liweiyang.lwyFrame.util.base.mode.link;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 链表
  *
@@ -63,15 +66,71 @@ public class LinkList {
         return false;
     }
 
+    /**
+     * 指定 key 查询链表
+     *
+     * @param data
+     * @return
+     */
+    public LinkBean find(int data) {
+        // 从 first 比较 data 值，不相等取当前的 bean 中的 next 继续查找，
+        // 直到找到目标数据，如果查到 first 等于 null 也就是链表的最后一个节点
+        // 那就是链表中不包含这个值
+
+        LinkBean current = first;
+        while (current.getData() != data) {
+            if (current.getNext() == null) {
+                System.out.println("链表中找不到目标对象");
+                return null;
+            }  else {
+                current = current.getNext();
+            }
+        }
+        return current;
+    }
+
+    /**
+     * 根据 data 删除指定的节点数据
+     * @param data
+     * @return
+     */
+    public LinkBean delete(int data) {
+        LinkBean current = first;
+        LinkBean pervious = first;
+        // 1. 循环查找待删除的数据
+        while(current.getData() != data) {
+            if (current.getNext() == null) {
+                System.out.println("没有找到待删除的数据");
+                return null;
+            } else {
+                pervious = current;
+                current = current.getNext();
+            }
+        }
+        // 2. 找到了数据
+        // 2.1 这个数据就是第一个节点，删除第一个节点，把第一节点的next赋值给 first
+        if (first == current) {
+            first = current.getNext();
+        } else {
+            // 2.2 删除的不是第一节点，那就把删除节点的上一个节点和后一个节点连接起来
+            pervious.setNext(current.getNext());
+        }
+        return current;
+    }
+
     public static void main(String[] args) {
-        LinkList linkList = new LinkList();
+        /*LinkList linkList = new LinkList();
         for (int i = 0; i < 10; i++) {
             linkList.insertFirst(i + 1, i + 1);
         }
-        linkList.displayList();
-
         // 自身循环引用
-        LinkBean linkBean = new LinkBean(1, 1.0);
-        linkBean.setNext(linkBean);
+        *//*LinkBean linkBean = new LinkBean(1, 1.0);
+        linkBean.setNext(linkBean);*//*
+        LinkBean linkBean = linkList.delete(2);
+        linkBean.displayLink();
+        linkList.displayList();*/
+        String json = "{\"姓名\":\"小孙\",\"年龄\":\"20\",\"开始时间\":\"2020-06-04\",\"负责人\":\"老王\"}";
+        JSONObject jsonObject = (JSONObject)JSON.parse(json);
+        System.out.println(jsonObject.getString("姓名"));
     }
 }
