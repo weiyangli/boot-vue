@@ -10,3 +10,4 @@ classes/
 target/
 ### iView ###
 node_modules/
+/dist
