@@ -18,6 +18,7 @@ xmlns 属性其实就是根据 xsi:schemaLocation 导入的文件，然后给他
 
         <!-- 引入其他配置 -->
         <import resource="classpath:config/application-mvc.xml"/>
+        <import resource="mybatis.xml" />
 
         <bean class="com.liweiyang.lwyFrame.bean.Demo" name="demo">
             <property name="id" value="4851548784485855"></property>

@@ -1,8 +1,5 @@
 package com.liweiyang.lwyFrame.util.base.mode.link;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
 /**
  * 链表
  *
@@ -119,18 +116,13 @@ public class LinkList {
     }
 
     public static void main(String[] args) {
-        /*LinkList linkList = new LinkList();
+        LinkList linkList = new LinkList();
         for (int i = 0; i < 10; i++) {
             linkList.insertFirst(i + 1, i + 1);
         }
         // 自身循环引用
-        *//*LinkBean linkBean = new LinkBean(1, 1.0);
-        linkBean.setNext(linkBean);*//*
-        LinkBean linkBean = linkList.delete(2);
-        linkBean.displayLink();
-        linkList.displayList();*/
-        String json = "{\"姓名\":\"小孙\",\"年龄\":\"20\",\"开始时间\":\"2020-06-04\",\"负责人\":\"老王\"}";
-        JSONObject jsonObject = (JSONObject)JSON.parse(json);
-        System.out.println(jsonObject.getString("姓名"));
+        LinkBean linkBean = new LinkBean(1, 1.0);
+        linkBean.setNext(linkBean);
+        linkList.displayList();
     }
 }
