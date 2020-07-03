@@ -1,4 +1,4 @@
-package com.liweiyang.lwyFrame.util.base;
+package com.liweiyang.lwyFrame.util.base.algorithm;
 
 import java.util.Arrays;
 import java.util.Scanner;
